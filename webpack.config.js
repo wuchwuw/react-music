@@ -37,7 +37,7 @@ var config = {
         include: path.resolve(__dirname, 'app')
       },
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         include: path.resolve(__dirname, 'app'),
         options: {
