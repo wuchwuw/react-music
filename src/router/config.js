@@ -1,27 +1,31 @@
 import React from 'react'
-import loadHome from 'bundle-loader?lazy!components/home'
-import loadHello from 'bundle-loader?lazy!components/hello'
-import Demo from 'bundle-loader?lazy!components/demo'
-import loadChild from 'bundle-loader?lazy!components/child'
-import Bundle from './boundle'
+import recommend from 'components/recommend/recommend'
+import singer from 'components/singer/singer'
+import rank from 'components/rank/rank'
+import search from 'components/search/search'
+// import loadHome from 'bundle-loader?lazy!learn/home'
+// import loadHello from 'bundle-loader?lazy!learn/hello'
+// import Demo from 'bundle-loader?lazy!learn/demo'
+// import loadChild from 'bundle-loader?lazy!learn/child'
+// import Bundle from './boundle'
 
-const Home = (props) => (
-  <Bundle load={loadHome}>
-    {(Home) => <Home {...props}/>}
-  </Bundle>
-)
+// const Home = (props) => (
+//   <Bundle load={loadHome}>
+//     {(Home) => <Home {...props}/>}
+//   </Bundle>
+// )
 
-const Hello = (props) => (
-  <Bundle load={loadHello}>
-    {(Hello) => <Hello {...props}/>}
-  </Bundle>
-)
+// const Hello = (props) => (
+//   <Bundle load={loadHello}>
+//     {(Hello) => <Hello {...props}/>}
+//   </Bundle>
+// )
 
-const Child = (props) => (
-  <Bundle load={loadChild}>
-    {(Child) => <Child {...props}/>}
-  </Bundle>
-)
+// const Child = (props) => (
+//   <Bundle load={loadChild}>
+//     {(Child) => <Child {...props}/>}
+//   </Bundle>
+//)
 // const creatComponent = (Component) => {
 //   return (props) => {
 //     <Bundle load={Component}>
@@ -40,18 +44,20 @@ const Child = (props) => (
 
 const routes = [
   {
-    path: '/home',
-    component: Home,
-    routes: [
-      {
-        path: '/home/netflix',
-        component: Child
-      }
-    ]
+    path: '/recommend',
+    component: recommend,
   },
   {
-    path: '/hello',
-    component: Hello
+    path: '/singer',
+    component: singer
+  },
+  {
+    path: '/rank',
+    component: rank
+  },
+  {
+    path: '/search',
+    component: search
   }
 ]
 

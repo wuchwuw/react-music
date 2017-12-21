@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './todo'
 import { connect } from 'react-redux'
-import { toggleTodo } from 'store/actions'
+import { toggleTodo } from './store/actions'
 
 // const TodoList = ({todos, onTodoClick}) => {
 //   return (

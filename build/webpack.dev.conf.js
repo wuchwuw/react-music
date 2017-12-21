@@ -19,20 +19,26 @@ module.exports = merge(webpackBaseConf, {
   },
   module: {
     rules: [
-      {
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          //resolve-url-loader may be chained before sass-loader if necessary
-          use: ['css-loader?{"minimize":true}', 'less-loader']
-        })
-      }
+      // {
+      //   test: /\.less$/,
+      //   use: ExtractTextPlugin.extract({
+      //     fallback: 'style-loader',
+      //     //resolve-url-loader may be chained before sass-loader if necessary
+      //     use: ['css-loader?{"minimize":true}', 'less-loader']
+      //   })
+      // }
     ]
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    contentBase: '../dist',
+    hot: true,
+    host: '0.0.0.0',
+    inline: true,
+    disableHostCheck: true
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',

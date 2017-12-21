@@ -12,7 +12,9 @@ module.exports = {
     ],
     extensions: ['.jsx', '.vue', '.json', '.js'],
     alias: {
+      'learn': resolve('src/learn'),
       'components': resolve('src/components'),
+      'common': resolve('src/common'),
       'store': resolve('src/store')
     },
   },
@@ -41,6 +43,32 @@ module.exports = {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.less$/,
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "less-loader" // compiles Less to CSS
+        }]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1,
+          name: 'fonts/[name].[hash].[ext]'
+        }
+      },
+      {
+        test: /\.(png|jpe?g|git|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          name: `images/[name].[hash].[ext]`,
+          limit: 2000
+        }
       }
     ]
   }
