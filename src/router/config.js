@@ -3,6 +3,7 @@ import recommend from 'components/recommend/recommend'
 import singer from 'components/singer/singer'
 import rank from 'components/rank/rank'
 import search from 'components/search/search'
+import singerDetail from 'components/singer-detail/singer-detail'
 // import loadHome from 'bundle-loader?lazy!learn/home'
 // import loadHello from 'bundle-loader?lazy!learn/hello'
 // import Demo from 'bundle-loader?lazy!learn/demo'
@@ -49,7 +50,14 @@ const routes = [
   },
   {
     path: '/singer',
-    component: singer
+    component: singer,
+    routes: [
+      {
+        name: 'singerDetail',
+        path: '/singer/:id',
+        component: singerDetail
+      }
+    ]
   },
   {
     path: '/rank',

@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const axios = require('axios')
 
 const resolve = (dir) => {
   return path.join(__dirname, `../${dir}`)
@@ -35,7 +36,23 @@ module.exports = merge(webpackBaseConf, {
     hot: true,
     host: '0.0.0.0',
     inline: true,
-    disableHostCheck: true
+    disableHostCheck: true,
+    before(app) {
+      app.get('/api/getDiscList', function (req, res) {
+        const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

@@ -10,12 +10,14 @@ module.exports = {
     modules: [
       path.join(__dirname, '../node_modules')
     ],
-    extensions: ['.jsx', '.vue', '.json', '.js'],
+    extensions: ['.jsx', '.json', '.js'],
     alias: {
       'learn': resolve('src/learn'),
       'components': resolve('src/components'),
       'common': resolve('src/common'),
-      'store': resolve('src/store')
+      'store': resolve('src/store'),
+      'api': resolve('src/api'),
+      'base': resolve('src/base')
     },
   },
   module: {
