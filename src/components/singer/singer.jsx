@@ -75,9 +75,6 @@ export default class Singer extends Component {
   render () {
     const { match, history, routes, location } = this.props
     const route = findRoute(routes, 'singerDetail')
-    console.log(routes)
-    console.log(route)
-    console.log(location)
     return (
       <div className="singer">
         <ListView history={history} data={this.state.singer}></ListView>

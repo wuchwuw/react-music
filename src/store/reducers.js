@@ -3,7 +3,7 @@ import {
 } from './actions'
 import { combineReducers } from 'redux'
 
-function setSinger (state=[], action) {
+function setSinger (state={}, action) {
   switch (action.type) {
     case SET_SINGER:
       return action.singer

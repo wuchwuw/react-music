@@ -15,7 +15,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <div id="app">
+          <div id="app" onTouchMove={e => {e.preventDefault()}}>
             <Mheader />
             <Tab />
             <Switch>
