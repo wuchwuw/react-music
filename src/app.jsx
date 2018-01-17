@@ -6,6 +6,7 @@ import routes from './router/config.js'
 import { Provider } from 'react-redux'
 import configureStore from 'store'
 import createHistory from 'history/createBrowserHistory'
+import Player from 'components/player/player'
 
 const store = configureStore()
 const history = createHistory()
@@ -27,6 +28,7 @@ export default class App extends Component {
                 ))
               }
             </Switch>
+            <Player></Player>
           </div>
         </Router>
       </Provider>

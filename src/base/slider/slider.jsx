@@ -91,13 +91,11 @@ export default class Slider extends Component {
     })
     this.scroll.on('scrollEnd', this._onScrollEnd.bind(this))
     this.scroll.on('touchend', () => {
-      console.log('touchend')
       if (autoPlay) {
         this._play()
       }
     })
     this.scroll.on('beforeScrollStart', () => {
-      console.log('beforeScrollStart')
       if (autoPlay) {
         clearTimeout(this.timer)
       }
@@ -110,7 +108,6 @@ export default class Slider extends Component {
     }
   }
   _onScrollEnd () {
-    console.log('ScrollEnd')
     const { autoPlay } = this.props
     let pageIndex = this.scroll.getCurrentPage().pageX
     this.setState({
@@ -128,13 +125,11 @@ export default class Slider extends Component {
     }, interval)
   }
   _initDots () {
-    console.log(this.children.length)
     this.setState({
       dots: new Array(this.children.length).fill('1')
     })
   }
   render () {
-    console.log('render')
     return (
       <div className="slider" ref={(slider) => { this.slider = slider}}>
         <div className="slider-group" ref={(sliderChildren) => { this.sliderChildren = sliderChildren}}>

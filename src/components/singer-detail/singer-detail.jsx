@@ -22,8 +22,11 @@ class SingerDetail extends Component {
       return
     }
     getSingerDetail(this.props.singer.id).then((res) => {
+      console.log(res)
       if (res.code === ERR_OK) {
-        this.songs = this._normalizeSongs(res.data.list)
+        this.setState({
+          songs: this._normalizeSongs(res.data.list)
+        })
       }
     })
   }
@@ -38,10 +41,11 @@ class SingerDetail extends Component {
     return ret
   }
   render () {
-    const { title, bgImage} = this.props.singer
+    const { name: title, avatar: bgImage } = this.props.singer
+    console.log(this.songs)
     return (
       <div className="slide">
-        <MusicList title={title} bgImage={bgImage}></MusicList>
+        <MusicList songs={this.state.songs} history={this.props.history} title={title} bgImage={bgImage}></MusicList>
       </div>
     )
   }

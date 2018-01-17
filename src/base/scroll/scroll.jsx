@@ -29,7 +29,6 @@ export default class Scroll extends Component {
     }, 20)
   }
   componentWillUnmount() {
-    console.log(this.props)
   }
   disable() {
     this.scroll && this.scroll.disable()
@@ -47,11 +46,9 @@ export default class Scroll extends Component {
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
   _initScroll () {
-    console.log(1)
     if (!this.wrapper) {
       return
     }
-    console.log('init'+this.props.probeType)
     this.scroll = new BScroll(this.wrapper, {
       probeType: this.props.probeType,
       click: this.props.click,

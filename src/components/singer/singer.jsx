@@ -79,7 +79,7 @@ export default class Singer extends Component {
       <div className="singer">
         <ListView history={history} data={this.state.singer}></ListView>
         <ReactCSSTransitionGroup component="div" transitionName="slide" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-          <Route location={location} key={location.key} path={route.path} component={route.component}></Route>
+          <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
         </ReactCSSTransitionGroup>
       </div>
     )

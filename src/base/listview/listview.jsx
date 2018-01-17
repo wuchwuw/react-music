@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Scroll from 'base/scroll/scroll'
-import {getData} from 'common/js/dom'
+import { getData } from 'common/js/dom'
 import './listview.less'
-import {is} from 'immutable'
-import {setSinger} from 'store/actions'
-import {connect} from 'react-redux'
+import { is } from 'immutable'
+import { setSinger } from 'store/actions'
+import { connect } from 'react-redux'
 
 const TITLE_HEIGHT = 30
 const ANCHOR_HEIGHT = 18
@@ -46,7 +46,6 @@ class ListView extends Component {
   selectItem (e, item) {
     e.preventDefault()
     this.props.history.push(`/singer/${item.id}`)
-    console.log(item)
     this.props.dispatch(setSinger(item))
   }
   onShortcutTouchStart (e) {

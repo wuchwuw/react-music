@@ -57,6 +57,16 @@ module.exports = {
         }]
       },
       {
+        test: /\.styl$/,
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "stylus-loader" // compiles Less to CSS
+        }]
+      },
+      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {

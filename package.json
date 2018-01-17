@@ -44,6 +44,8 @@
     "mocha": "^3.5.0",
     "sinon": "^2.4.1",
     "style-loader": "^0.18.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.9.4"
@@ -51,6 +53,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "better-scroll": "^1.6.3",
+    "create-keyframe-animation": "^0.1.0",
     "immutable": "^3.8.2",
     "jsonp": "^0.2.1",
     "react": "^16.0.2",
