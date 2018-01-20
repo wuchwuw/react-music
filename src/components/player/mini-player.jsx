@@ -6,17 +6,17 @@ export default class MiniPlayer extends Component {
     super()
   }
   render () {
-    const { image, name, singer } = this.props
+    const { currentSong } = this.props
     return (
       <div className="mini-player">
         <div className="icon">
           <div className="imgWrapper" ref="miniWrapper">
-            <img src={image} className="cdCls" width="40" height="40"/>
+            <img src={currentSong.image} className="cdCls" width="40" height="40"/>
           </div>
         </div>
         <div className="text">
-          <h2 className="name">{name}</h2>
-          <p className="desc">{singer}</p>
+          <h2 className="name">{currentSong.name}</h2>
+          <p className="desc">{currentSong.singer}</p>
         </div>
         <div className="control">
           {/* <progress-circle radius="radius" percent="percent">

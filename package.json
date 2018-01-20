@@ -56,6 +56,7 @@
     "create-keyframe-animation": "^0.1.0",
     "immutable": "^3.8.2",
     "jsonp": "^0.2.1",
+    "lyric-parser": "^1.0.1",
     "react": "^16.0.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-update": "^15.6.2",
