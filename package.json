@@ -55,6 +55,7 @@
     "better-scroll": "^1.6.3",
     "create-keyframe-animation": "^0.1.0",
     "immutable": "^3.8.2",
+    "js-base64": "^2.4.1",
     "jsonp": "^0.2.1",
     "lyric-parser": "^1.0.1",
     "react": "^16.0.2",

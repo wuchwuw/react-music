@@ -3168,6 +3168,10 @@ js-base64@^2.1.9:
   version "2.3.2"
   resolved "http://r.cnpmjs.org/js-base64/download/js-base64-2.3.2.tgz#a79a923666372b580f8e27f51845c6f7e8fbfbaf"
 
+js-base64@^2.4.1:
+  version "2.4.1"
+  resolved "http://r.cnpmjs.org/js-base64/download/js-base64-2.4.1.tgz#e02813181cd53002888e918935467acb2910e596"
+
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "http://r.cnpmjs.org/js-tokens/download/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"

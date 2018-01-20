@@ -93,9 +93,11 @@ export default class Cd extends Component {
     }
     let deltaX = e.touches[0].pageX - this.touch.startX
     let deltaY = e.touches[0].pageY - this.touch.startY
+    console.log(Math.abs(deltaX) < Math.abs(deltaY))
     if (Math.abs(deltaX) < Math.abs(deltaY)) {
       return
     }
+    this.touch.moved = true
     const left = this.currentShow === 'cd' ? 0 : -window.innerWidth
     let offset = Math.min(0, Math.max(-window.innerWidth, left + deltaX))
     this.touch.percent = Math.abs(offset / window.innerWidth)
@@ -105,6 +107,9 @@ export default class Cd extends Component {
     this.cdWrapper.style[transitionDuration] = 0
   }
   middleTouchEnd () {
+    if (!this.touch.moved) {
+      return
+    }
     let offsetWidth
     let opacity
     if (this.currentShow === 'cd') {
@@ -132,6 +137,7 @@ export default class Cd extends Component {
     this.cdWrapper.style.opacity = opacity
     this.cdWrapper.style[transitionDuration] = `${time}ms`
     this.touch.initiated = false
+    this.touch.moved = false
   }
   _pad (num, n = 2) {
     let len = num.toString().length
@@ -148,7 +154,19 @@ export default class Cd extends Component {
     return `${minute}:${second}`
   }
   render () {
-    let { currentSong, back, playing, percent, resetPercent } = this.props
+    let {
+      currentSong,
+      back,
+      playing,
+      percent,
+      resetPercent,
+      lyricList,
+      currentLyric,
+      lyricEl,
+      lyricScrollEl,
+      currentLineNum,
+      playingLyric
+    } = this.props
     let cTime = this.format(this.props.currentTime)
     let dTime = this.format(currentSong.duration)
     return (
@@ -172,19 +190,23 @@ export default class Cd extends Component {
           <div className="middle-l" ref={cdWrapper => this.cdWrapper = cdWrapper}>
             <div className="cd-wrapper">
               <div className="cd">
-                <img className="image" src={currentSong.image} alt=""/>
+                <img className={playing?'image play' : 'image pause'} src={currentSong.image} alt=""/>
               </div>
             </div>
             <div className="playing-lyric-wrapper">
-              <div className="playing-lyric"></div>
+              <div className="playing-lyric">{playingLyric}</div>
             </div>
           </div>
           <div className="middle-r" ref={lyricList => this.lyricList = lyricList}>
-            <div className="lyric-wrapper">
-              <div>
-                <p className="text">xxxxxxxx</p>
+            <Scroll ref={lyricScrollEl} data={currentLyric && currentLyric.lines}>
+              <div className="lyric-wrapper" ref={lyricEl}>
+                {
+                  currentLyric && currentLyric.lines.map((line, index) => (
+                    <p className={currentLineNum === index ? 'text current' : 'text'} key={index}>{line.txt}</p>
+                  ))
+                }
               </div>
-            </div>
+            </Scroll>
           </div>
         </div>
         <div className="bottom">

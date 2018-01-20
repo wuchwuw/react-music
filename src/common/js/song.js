@@ -1,6 +1,7 @@
 import { getUid } from './uid'
-import { getVKey } from 'api/song'
+import { getVKey, getLyric } from 'api/song'
 import { ERR_OK } from 'api/config'
+import { Base64 } from 'js-base64'
 let urlMap = {}
 
 export default class Song {
@@ -25,7 +26,7 @@ export default class Song {
     }
     return new Promise((resolve, reject) => {
       getLyric(this.mid).then((res) => {
-        if (res.retcode === ERR_OK) {
+        if (res.code === ERR_OK) {
           this.lyric = Base64.decode(res.lyric)
           resolve(this.lyric)
         } else {

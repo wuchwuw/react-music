@@ -9,6 +9,9 @@ import Cd from './cd'
 import MiniPlayer from './mini-player'
 import { setFullScreen, setCurrentIndex, setCurrentSong, setPlayingState } from 'store/actions'
 import { is } from 'immutable'
+import Lyric from 'lyric-parser'
+
+const timeExp = /\[(\d{2}):(\d{2}):(\d{2})]/g
 
 class Player extends Component {
   constructor () {
@@ -16,6 +19,11 @@ class Player extends Component {
     this.state = {
       currentTime: 0
     }
+    this.playingLyric = ''
+    this.isPureMusic = false
+    this.pureMusicLyric = ''
+    this.currentLyric = null
+    this.currentLineNum = 0
     this.back = this.back.bind(this)
     this.ready = this.ready.bind(this)
     this.prev = this.prev.bind(this)
@@ -24,6 +32,10 @@ class Player extends Component {
     this.end = this.end.bind(this)
     this.updateTime = this.updateTime.bind(this)
     this.resetPercent = this.resetPercent.bind(this)
+    this.getLyric = this.getLyric.bind(this)
+    this.lyricScrollEl = this.lyricScrollEl.bind(this)
+    this.lyricEl = this.lyricEl.bind(this)
+    this.handleLyric = this.handleLyric.bind(this)
   }
   componentDidMount () {
     this.timer = null
@@ -35,8 +47,18 @@ class Player extends Component {
         return
       }
       this.songReady = false
+      this.canLyricPlay = false
+      if (this.currentLyric) {
+        this.currentLyric.stop()
+        // 重置为null
+        this.currentLyric = null
+        this.currentTime = 0
+        this.playingLyric = ''
+        this.currentLineNum = 0
+      }
       this.audio.src = nextProps.currentSong.url
       this.audio.play()
+      this.getLyric(nextProps.currentSong)
     }
     if (this.props.playing !== nextProps.playing) {
       if (!this.songReady) {
@@ -53,9 +75,12 @@ class Player extends Component {
   ready () {
     clearTimeout(this.timer)
     this.songReady = true
+    this.canLyricPlay = true
+    if (this.currentLyric && !this.isPureMusic) {
+      this.currentLyric.seek(this.currentTime * 1000)
+    }
   }
   next () {
-    console.log(this.props)
     const { currentIndex, playlist, setCurrentIndex, setCurrentSong, playing } = this.props
     if (!this.songReady) {
       return
@@ -97,6 +122,9 @@ class Player extends Component {
     const { setPlayingState } = this.props
     this.audio.play()
     setPlayingState(true)
+    if (this.currentLyric) {
+      this.currentLyric.seek(0)
+    }
   }
   togglePlaying () {
     if (!this.songReady) {
@@ -104,10 +132,17 @@ class Player extends Component {
     }
     const { setPlayingState, playing } = this.props
     setPlayingState(!playing)
+    if (this.currentLyric) {
+      this.currentLyric.togglePlay()
+    }
   }
   paused () {
     const { setPlayingState } = this.props
     setPlayingState(false)
+    if (this.currentLyric) {
+      this.currentLyric.stop()
+    }
+
   }
   end () {
     this.next()
@@ -116,21 +151,78 @@ class Player extends Component {
     this.setState({
       currentTime: e.target.currentTime
     })
+    if (this.currentLyric) {
+      this.currentLyric.seek(this.state.currentTime * 1000)
+    }
   }
   resetPercent (percent) {
-    const { currentSong } = this.props
+    const { currentSong, playing } = this.props
     let currentTime = percent * currentSong.duration
     this.setState({
       currentTime: currentTime
     })
     this.audio.currentTime = currentTime
+    if (this.currentLyric) {
+      this.currentLyric.seek(currentTime * 1000)
+    }
+    if (!playing) {
+      this.togglePlaying()
+    }
+  }
+  getLyric (currentSong) {
+    currentSong.getLyric().then(lyric => {
+      if (currentSong.lyric !== lyric) {
+        return
+      }
+      this.currentLyric = new Lyric(lyric, this.handleLyric)
+      this.isPureMusic = !this.currentLyric.lines.length
+      if (this.isPureMusic) {
+        this.pureMusicLyric = this.currentLyric.lrc.replace(timeExp, '').trim()
+        this.playingLyric = this.pureMusicLyric
+      } else {
+        if (this.playing && this.canLyricPlay) {
+          // 这个时候有可能用户已经播放了歌曲，要切到对应位置
+          this.currentLyric.seek(this.currentTime * 1000)
+        }
+      }
+    }).catch((e) => {
+      conosl.log(e)
+      this.currentLyric = null
+      this.playingLyric = ''
+      this.currentLineNum = 0
+    })
+  }
+  handleLyric({lineNum, txt}) {
+    console.log(lineNum)
+    if (!this.lyricLine) {
+      return
+    }
+    this.currentLineNum = lineNum
+    if (lineNum > 5) {
+      let lineEl = this.lyricLine.children[lineNum - 5]
+      this.lyricList.scrollToElement(lineEl, 1000)
+    } else {
+      this.lyricList.scrollTo(0, 0, 1000)
+    }
+    this.playingLyric = txt
+  }
+  lyricEl (el) {
+    console.log(el)
+    this.lyricLine = el
+  }
+  lyricScrollEl (el) {
+    console.log(el)
+    this.lyricList = el
   }
   render () {
     const { fullScreen, location, playing, currentSong, playlist } = this.props
     const percent = this.state.currentTime / currentSong.duration
     return (
       <div className="player" style={playlist.length > 0 ? {display:'block'} : {display:'none'}}>
-        <TransitionGroup component="div" transitionName="normal" transitionEnterTimeout={300}
+        <TransitionGroup
+          component="div"
+          transitionName="normal"
+          transitionEnterTimeout={300}
           transitionLeaveTimeout={300}>
           { fullScreen
             ?
@@ -145,6 +237,11 @@ class Player extends Component {
               percent={percent}
               resetPercent={this.resetPercent}
               next={this.next}
+              lyricEl={this.lyricEl}
+              lyricScrollEl={this.lyricScrollEl}
+              currentLyric={this.currentLyric}
+              currentLineNum={this.currentLineNum}
+              playingLyric={this.playingLyric}
             >
             </Cd>
             :

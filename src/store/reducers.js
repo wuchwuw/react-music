@@ -10,7 +10,6 @@ import {
 import { combineReducers } from 'redux'
 
 function setSinger (state={}, action) {
-  console.log(1)
   switch (action.type) {
     case SET_SINGER:
       return action.singer
