@@ -5,7 +5,8 @@ import {
   SET_SQUENCE_LIST,
   SET_FULL_SCREEN,
   SET_PLAYING_STATE,
-  SET_CURRENT_SONG
+  SET_CURRENT_SONG,
+  SET_TOP_LIST
 } from './actions'
 import { combineReducers } from 'redux'
 
@@ -65,6 +66,14 @@ function setCurrentSong (state={}, action) {
       return state
   }
 }
+function setTopList (state={}, action) {
+  switch (action.type) {
+    case SET_TOP_LIST:
+      return action.topList
+    default:
+      return state
+  }
+}
 const rootReducer = combineReducers({
   singer: setSinger,
   playlist: setPlaylist,
@@ -72,7 +81,8 @@ const rootReducer = combineReducers({
   currentIndex: setCurrentIndex,
   playing: setPlaying,
   fullScreen: setFullScreen,
-  currentSong: setCurrentSong
+  currentSong: setCurrentSong,
+  topList: setTopList
 })
 
 export default rootReducer

@@ -12,7 +12,7 @@ export default class Scroll extends Component {
   static defaultProps = {
     probeType: 1,
     data: [],
-    listenScroll: true,
+    listenScroll: false,
     click: false,
     direction: DIRECTION_V
   }
@@ -30,19 +30,19 @@ export default class Scroll extends Component {
   }
   componentWillUnmount() {
   }
-  disable() {
+  disable () {
     this.scroll && this.scroll.disable()
   }
-  enable() {
+  enable () {
     this.scroll && this.scroll.enable()
   }
-  refresh() {
+  refresh () {
     this.scroll && this.scroll.refresh()
   }
-  scrollTo() {
+  scrollTo () {
     this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
   }
-  scrollToElement() {
+  scrollToElement () {
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
   _initScroll () {

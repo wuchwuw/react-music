@@ -6,6 +6,7 @@ export const SET_PLAYING_STATE = 'SET_PLAYING_STATE'
 export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 export const SET_PLAYLIST = 'SET_PLAYLIST'
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG'
+export const SET_TOP_LIST = 'SET_TOP_LIST'
 
 export function setSinger (singer) {
   return {
@@ -64,5 +65,12 @@ export function setPlayList (playlist) {
   return {
     type: SET_PLAYLIST,
     playlist: playlist
+  }
+}
+
+export function setTopList (topList) {
+  return {
+    type: SET_TOP_LIST,
+    topList: topList
   }
 }

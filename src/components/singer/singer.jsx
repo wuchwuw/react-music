@@ -5,6 +5,7 @@ import { ERR_OK } from 'api/config'
 import ListView from 'base/listview/listview'
 import createSinger from 'common/js/singer'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { findRoute } from 'common/js/util'
 
 import './singer.less'
 
@@ -84,10 +85,4 @@ export default class Singer extends Component {
       </div>
     )
   }
-}
-
-function findRoute (routes, name) {
-  return routes.find((item) => {
-    return item.name === name
-  })
 }

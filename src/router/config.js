@@ -4,6 +4,7 @@ import singer from 'components/singer/singer'
 import rank from 'components/rank/rank'
 import search from 'components/search/search'
 import singerDetail from 'components/singer-detail/singer-detail'
+import topList from 'components/top-list/top-list'
 // import loadHome from 'bundle-loader?lazy!learn/home'
 // import loadHello from 'bundle-loader?lazy!learn/hello'
 // import Demo from 'bundle-loader?lazy!learn/demo'
@@ -61,7 +62,14 @@ const routes = [
   },
   {
     path: '/rank',
-    component: rank
+    component: rank,
+    routes: [
+      {
+        name: 'rankDetail',
+        path: '/rank/:id',
+        component: topList
+      }
+    ]
   },
   {
     path: '/search',
