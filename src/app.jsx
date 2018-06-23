@@ -16,9 +16,11 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <div id="app" onTouchMove={e => {e.preventDefault()}}>
-            <Mheader />
-            <Tab />
+          <div id="app" style={{touchAction: 'none', paddingTop: '88px'}}>
+            <div style={{position: 'fixed', top: '0', left: '0', right: '0', background: '#222'}}>
+              <Mheader />
+              <Tab />
+            </div>
             <Switch>
               {
                 routes.map((route, i) => (
