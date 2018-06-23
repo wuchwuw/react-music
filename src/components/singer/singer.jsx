@@ -7,7 +7,7 @@ import createSinger from 'common/js/singer'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { findRoute } from 'common/js/util'
 
-import './singer.less'
+import './singer.styl'
 
 const HOT_NAME = '热门'
 const HOT_SINGER_LEN = 10

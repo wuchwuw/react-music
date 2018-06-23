@@ -61,6 +61,7 @@
     "js-base64": "^2.4.1",
     "jsonp": "^0.2.1",
     "lyric-parser": "^1.0.1",
+    "prop-types": "^15.6.2",
     "react": "^16.0.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-update": "^15.6.2",

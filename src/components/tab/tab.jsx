@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import './tab.less'
+import './tab.styl'
 
 const Tab = () => {
   return (

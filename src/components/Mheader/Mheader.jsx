@@ -1,5 +1,5 @@
 import React from 'react'
-import './mHeader.less'
+import './mHeader.styl'
 import { Link } from 'react-router-dom'
 
 const Mheader = () => (

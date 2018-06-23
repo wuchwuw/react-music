@@ -62,7 +62,7 @@ export default class Scroll extends Component {
   }
   render () {
     return (
-      <div ref={wrapper => this.wrapper = wrapper} style={{height: '100%',overflow: 'hidden'}}>
+      <div ref={wrapper => this.wrapper = wrapper} style={{height: '100%'}}>
         {this.props.children}
       </div>
     )

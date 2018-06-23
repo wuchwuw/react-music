@@ -1,17 +1,21 @@
 @import "~common/stylus/variable"
 @import "~common/stylus/mixin"
+@keyframes rotate
+  0%
+    transform: rotate(0)
+  100%
+    transform: rotate(360deg)
 .mini-player
   display: flex
   align-items: center
   position: fixed
   left: 0
   bottom: 0
-  z-index: 180
   width: 100%
   height: 60px
   background: $color-highlight-background
   &.mini-enter-active, &.mini-leave-active
-    transition: all 0.4s
+    transition: all 0.3s
   &.mini-enter, &.mini-leave-to
     opacity: 0
   .icon
@@ -20,8 +24,9 @@
     padding: 0 10px 0 20px
     img
       border-radius: 50%
+      animation: rotate 10s linear infinite
       &.play
-        animation: rotate 10s linear infinite
+        animation-play-state: running
       &.pause
         animation-play-state: paused
   .text

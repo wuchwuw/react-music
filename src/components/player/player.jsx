@@ -17,7 +17,8 @@ class Player extends Component {
   constructor () {
     super()
     this.state = {
-      currentTime: 0
+      currentTime: 0,
+      radius: 32
     }
     this.playingLyric = ''
     this.isPureMusic = false
@@ -217,6 +218,7 @@ class Player extends Component {
   render () {
     const { fullScreen, location, playing, currentSong, playlist } = this.props
     const percent = this.state.currentTime / currentSong.duration
+    const { radius } = this.state
     return (
       <div className="player" style={playlist.length > 0 ? {display:'block'} : {display:'none'}}>
         <TransitionGroup
@@ -247,10 +249,11 @@ class Player extends Component {
             :
             null }
         </TransitionGroup>
-        <ReactCSSTransitionGroup component="span" transitionName="mini" transitionEnterTimeout={400}
-          transitionLeaveTimeout={400}>
-          { fullScreen ? null : <MiniPlayer key="mini" currentSong={currentSong}></MiniPlayer> }
-        </ReactCSSTransitionGroup>
+        {/* <ReactCSSTransitionGroup component="span" transitionName="mini" transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}>
+          { fullScreen ? null : <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer> }
+        </ReactCSSTransitionGroup> */}
+        <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer>
         <audio ref={audio => this.audio = audio} onPlaying={this.ready} onEnded={this.end} onTimeUpdate={e => this.updateTime(e)}></audio>
       </div>
     )

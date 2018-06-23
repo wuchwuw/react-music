@@ -4,7 +4,7 @@ import BScroll from 'better-scroll'
 import { Map } from 'immutable'
 import { getBanner } from 'api/recommend'
 import { ERR_OK } from 'api/config'
-import './slider.less'
+import './slider.styl'
 
 export default class Slider extends Component {
   constructor (props) {
