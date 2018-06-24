@@ -17,7 +17,7 @@ export default class App extends Component {
       <Provider store={store}>
         <Router history={history}>
           <div id="app" style={{touchAction: 'none', paddingTop: '88px'}}>
-            <div style={{position: 'fixed', top: '0', left: '0', right: '0', background: '#222'}}>
+            <div style={{position: 'fixed', top: '0', left: '0', right: '0', background: '#222', zIndex:1}}>
               <Mheader />
               <Tab />
             </div>

@@ -194,7 +194,6 @@ class Player extends Component {
     })
   }
   handleLyric({lineNum, txt}) {
-    console.log(lineNum)
     if (!this.lyricLine) {
       return
     }
@@ -208,11 +207,9 @@ class Player extends Component {
     this.playingLyric = txt
   }
   lyricEl (el) {
-    console.log(el)
     this.lyricLine = el
   }
   lyricScrollEl (el) {
-    console.log(el)
     this.lyricList = el
   }
   render () {

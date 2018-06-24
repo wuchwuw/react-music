@@ -14,9 +14,9 @@ const Tab = () => {
       <NavLink activeClassName="link-active" className="tab-item" to="/rank">
         <span className="tab-link">排行</span>
       </NavLink>
-      <NavLink activeClassName="link-active" className="tab-item" to="/search">
+      {/* <NavLink activeClassName="link-active" className="tab-item" to="/search">
         <span className="tab-link">搜索</span>
-      </NavLink>
+      </NavLink> */}
     </div>
   )
 }
