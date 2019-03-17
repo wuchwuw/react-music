@@ -26,6 +26,7 @@ export default class Song {
     }
     return new Promise((resolve, reject) => {
       getLyric(this.mid).then((res) => {
+        console.log(res)
         if (res.code === ERR_OK) {
           this.lyric = Base64.decode(res.lyric)
           resolve(this.lyric)

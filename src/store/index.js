@@ -5,7 +5,6 @@ import { state } from './state'
 import thunkMiddleware from 'redux-thunk'
 
 const loggerMiddleware = createLogger()
-console.log(state)
 export default function configureStore() {
   return createStore(
     rootReducer,

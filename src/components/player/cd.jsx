@@ -167,6 +167,7 @@ export default class Cd extends Component {
       currentLineNum,
       playingLyric
     } = this.props
+    console.log(lyricList)
     let cTime = this.format(this.props.currentTime)
     let dTime = this.format(currentSong.duration)
     return (

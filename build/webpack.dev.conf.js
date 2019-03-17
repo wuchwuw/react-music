@@ -11,7 +11,7 @@ const resolve = (dir) => {
 }
 
 module.exports = merge(webpackBaseConf, {
-  entry: resolve('src/index.js'),
+  entry: resolve('src/main.js'),
   output: {
     path: resolve('dist'),
     publicPath: '/',
