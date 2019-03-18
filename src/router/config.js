@@ -73,7 +73,15 @@ const routes = [
   },
   {
     path: '/search',
-    component: search
+    name: 'search',
+    component: search,
+    routes: [
+      {
+        name: 'searchSinger',
+        path: '/search/:id',
+        component: singerDetail
+      }
+    ]
   }
 ]
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MusicList from 'components/music-list/music-list'
 import './singer-detail.styl'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { getSingerDetail } from 'api/singer'
 import { ERR_OK } from 'api/config'
 import { createSong, isValidMusic } from 'common/js/song'

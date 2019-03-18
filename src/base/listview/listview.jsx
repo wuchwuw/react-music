@@ -72,8 +72,6 @@ class ListView extends Component {
     this._scrollTo(anchorIndex)
   }
   _scrollTo (index) {
-    console.log(index)
-    console.log(this.listGroup.children[index])
     if (!index && index !== 0) {
       return
     }

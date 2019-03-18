@@ -1,5 +1,5 @@
 import { getUid } from './uid'
-import { getVKey, getLyric } from 'api/song'
+import { getVKey, getLyric, getSongsUrl } from 'api/song'
 import { ERR_OK } from 'api/config'
 import { Base64 } from 'js-base64'
 let urlMap = {}
@@ -75,4 +75,17 @@ function filterSinger (singer) {
 
 export function isValidMusic (musicData) {
   return musicData.songid && musicData.albummid && (!musicData.pay || musicData.pay.payalbumprice === 0)
+}
+
+export function processSongsUrl(songs) {
+  if (!songs.length) {
+    return Promise.resolve(songs)
+  }
+  return getSongsUrl(songs).then((midUrlInfo) => {
+    midUrlInfo.forEach((info, index) => {
+      let song = songs[index]
+      song.url = info.purl.indexOf('http') === -1 ? `http://dl.stream.qqmusic.qq.com/${info.purl}` : info.purl
+    })
+    return songs
+  })
 }

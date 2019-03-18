@@ -3,6 +3,7 @@ const loaders = require('./loaders')
 const plugins = require('./plugins')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const axios = require('axios')
+const bodyParser = require('body-parser')
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -96,9 +97,9 @@ if (isProd) {
 } else {
   config.devServer = {
     historyApiFallback: true,
-    contentBase: '../dist',
     hot: true,
     host: '0.0.0.0',
+    port: 3333,
     inline: true,
     disableHostCheck: true,
     before(app) {
@@ -134,6 +135,36 @@ if (isProd) {
             }
           }
           res.json(ret)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+      app.get('/api/search', function (req, res) {
+        const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+      app.post('/api/getPurlUrl', bodyParser.json(), function (req, res) {
+        const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+        console.log(req.body)
+        axios.post(url, req.body, {
+          headers: {
+            referer: 'https://y.qq.com/',
+            origin: 'https://y.qq.com',
+            'Content-type': 'application/x-www-form-urlencoded'
+          }
+        }).then((response) => {
+          console.log(response.data)
+          res.json(response.data)
         }).catch((e) => {
           console.log(e)
         })

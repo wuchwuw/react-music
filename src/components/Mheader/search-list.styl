@@ -1,0 +1,50 @@
+@import "~common/stylus/variable"
+@import "~common/stylus/mixin"
+
+.wrap
+  text-align: left
+  padding-top 20px
+  height 100%
+  overflow hidden
+  box-sizing border-box
+  .hot-key
+    margin: 0 20px 20px 20px
+    .title
+      margin-bottom: 20px
+      font-size: $font-size-medium
+      color: $color-text-l
+    .item
+      display: inline-block
+      padding: 5px 10px
+      margin: 0 20px 10px 0
+      border-radius: 6px
+      background: $color-highlight-background
+      font-size: $font-size-medium
+      color: $color-text-d
+  .suggest
+    height: 100%
+    overflow: hidden
+    .suggest-list
+      padding: 0 30px
+      .suggest-item
+        display: flex
+        align-items: center
+        padding-bottom: 20px
+      .search-icon
+        flex: 0 0 30px
+        width: 30px
+        [class^="icon-"]
+          font-size: 14px
+          color: $color-text-d
+      .name
+        flex: 1
+        font-size: $font-size-medium
+        color: $color-text-d
+        overflow: hidden
+        .search-text
+          no-wrap()
+    .no-result-wrapper
+      position: absolute
+      width: 100%
+      top: 50%
+      transform: translateY(-50%)
