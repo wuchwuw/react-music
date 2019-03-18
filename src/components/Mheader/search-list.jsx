@@ -5,8 +5,9 @@ import { is } from 'immutable'
 import { ERR_OK } from 'api/config'
 import { createSong, isValidMusic, processSongsUrl } from 'common/js/song'
 import Scroll from 'base/scroll/scroll'
-import { setSinger } from 'store/actions'
+import { setSinger, insertSong } from 'store/actions'
 import { connect } from 'react-redux'
+import Loading from '../../base/loading/loading.jsx'
 
 const TYPE_SINGER = 'singer'
 const perpage = 20
@@ -16,9 +17,9 @@ class SearchList extends Component {
     super(props)
     this.state = {
       hotKey: [],
-      result: []
+      result: [],
+      hasMore: false
     }
-    this.hasMore = true
     this.page = 1
     this.pullup = true
     this.beforeScroll = true
@@ -58,7 +59,9 @@ class SearchList extends Component {
   _checkMore(data) {
     const song = data.song
     if (!song.list.length || (song.curnum + (song.curpage - 1) * perpage) >= song.totalnum) {
-      this.hasMore = false
+      this.setState({
+        hasMore: false
+      })
     }
   }
 
@@ -107,10 +110,11 @@ class SearchList extends Component {
   search() {
     let { query } =  this.props
     this.page = 1
-    this.hasMore = true
+    this.setState({
+      hasMore: true
+    })
     // this.$refs.suggest.scrollTo(0, 0)
     search(query, this.page, true /** showsinger */, perpage).then((res) => {
-      console.log(res)
       if (res.code === ERR_OK) {
         this._genResult(res.data).then((result) => {
           this.setState({
@@ -123,7 +127,7 @@ class SearchList extends Component {
   }
 
   searchMore() {
-    if (!this.hasMore) {
+    if (!this.state.hasMore) {
       return
     }
     this.page++
@@ -152,13 +156,13 @@ class SearchList extends Component {
       this.props.history.push(`/search/${singer.id}`)
       this.props.dispatch(setSinger(singer))
     } else {
-      this.insertSong(item)
+      this.props.dispatch(insertSong(item))
     }
     // this.$emit('select', item)
   }
 
   render () {
-    let { hotKey, result } = this.state
+    let { hotKey, result, hasMore } = this.state
     let { query } = this.props
     return (
       <div className="wrap">
@@ -198,7 +202,9 @@ class SearchList extends Component {
                     </li>
                   ))
                 }
-                {/* <loading v-show="hasMore" title=""></loading> */}
+                <div className="loading-wrap" style={hasMore ? {display:'flex'} : {display:'none'}}>
+                  <Loading title=""></Loading>
+                </div>
               </ul>
               {/* <div v-show="!hasMore && !result.length" className="no-result-wrapper">
                 <no-result title="抱歉，暂无搜索结果"></no-result>
@@ -211,4 +217,13 @@ class SearchList extends Component {
   }
 }
 
-export default connect()(SearchList)
+const mapStateToProps = (state) => {
+  const { query } = state
+  return {
+    query
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(SearchList)

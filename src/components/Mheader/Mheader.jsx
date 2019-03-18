@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import './mHeader.styl'
 import { Link } from 'react-router-dom'
 import SearchList from './search-list.jsx'
+import { setQuery } from 'store/actions'
+import { connect } from 'react-redux'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 
 class Mheader extends Component {
   constructor () {
     super()
     this.state = {
-      placeholder: '搜索歌曲、歌手',
-      query: '',
       isFocus: false
     }
     this.toggleFocus = this.toggleFocus.bind(this)
@@ -19,7 +19,7 @@ class Mheader extends Component {
   }
 
   componentDidMount () {
-    this.searchList.style.height = document.documentElement.clientHeight - 40 + 'px'
+    // this.searchList.style.height = document.documentElement.clientHeight - 40 + 'px'
   }
 
   clear () {}
@@ -36,18 +36,17 @@ class Mheader extends Component {
   }
 
   blur () {
-    this.setState({
-      query: '',
-      isFocus: false
-    })
+    this.props.dispatch(setQuery(''))
+    this.props.history.go(-1)
   }
 
   setQuery (e) {
-    if (e.target.composing) return
-    console.log(3)
-    this.setState({
-      query: e.target.value
-    })
+    // if (e.target.composing) return
+    // console.log(3)
+    // this.setState({
+    //   query: e.target.value
+    // })
+    this.props.dispatch(setQuery(e.target.value))
   }
 
   onCompositionStart (e) {
@@ -69,8 +68,8 @@ class Mheader extends Component {
   }
 
   render () {
-    const { query, placeholder, isFocus } = this.state
-    const { history } = this.props
+    const { isFocus } = this.state
+    const { query } = this.props
     return (
       <div className="m-header">
         {/* <Link to="/user" className="mine">
@@ -82,8 +81,8 @@ class Mheader extends Component {
             ref={query => this.query = query}
             onInput={this.setQuery}
             value={query}
-            className={isFocus ? 'box f' : 'box'}
-            placeholder={placeholder}
+            className='box f'
+            placeholder='搜索歌曲、歌手'
             onFocus={() => {this.setState({isFocus: true})}}
             onCompositionStart={(e) => {this.onCompositionStart(e)}}
             onCompositionEnd={(e) => {this.onCompositionEnd(e)}}
@@ -98,12 +97,12 @@ class Mheader extends Component {
             :
             <div onClick={this.blur.bind(this)} className="cancel">取消</div>
         }
-        <div style={isFocus ? { display: 'block'} : { display : 'none' }} ref={searchList => this.searchList = searchList} className="searchList">
+        {/* <div style={isFocus ? { display: 'block'} : { display : 'none' }} ref={searchList => this.searchList = searchList} className="searchList">
           <SearchList history={history} query={this.state.query}></SearchList>
-        </div>
+        </div> */}
       </div>
     )
   }
 }
 
-export default Mheader
+export default connect()(Mheader)

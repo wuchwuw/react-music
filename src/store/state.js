@@ -9,5 +9,6 @@ export const state = {
   mode: playMode.sequence,
   currentIndex: -1,
   currentSong: {},
-  topList: {}
+  topList: {},
+  query: ''
 }
