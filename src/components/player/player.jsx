@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Scroll from 'base/scroll/scroll'
-import animations from 'create-keyframe-animation'
-import TransitionGroup from 'react-transition-group/TransitionGroup'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Transition } from 'react-transition-group'
 import './player.styl'
 import Cd from './cd'
 import MiniPlayer from './mini-player'
@@ -12,6 +9,18 @@ import { is } from 'immutable'
 import Lyric from 'lyric-parser'
 
 const timeExp = /\[(\d{2}):(\d{2}):(\d{2})]/g
+const duration = 300
+
+const defaultStyle = {
+  transition: `visibility 0ms opacity ${duration}ms ease-in-out`,
+  visibility: 'hidden',
+  opacity: 0
+}
+
+const transitionStyles = {
+  entering: { visibility: 'hidden', opacity: 0 },
+  entered:  { visibility: 'visible', opacity: 1 },
+}
 
 class Player extends Component {
   constructor () {
@@ -218,12 +227,13 @@ class Player extends Component {
     const { radius } = this.state
     return (
       <div className="player" style={playlist.length > 0 ? {display:'block'} : {display:'none'}}>
-        <TransitionGroup
+        <Transition
+          in={fullScreen}
           component="div"
-          transitionName="normal"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
-          { fullScreen
+          classNames="normal"
+          timeout={300}
+        >
+          {/* { fullScreen
             ?
             <Cd
               key="cd"
@@ -244,8 +254,34 @@ class Player extends Component {
             >
             </Cd>
             :
-            null }
-        </TransitionGroup>
+            <div></div> } */}
+
+          {state => (
+            <div style={{
+              ...defaultStyle,
+              ...transitionStyles[state]
+            }}>
+              <Cd
+                key="cd"
+                currentSong={currentSong}
+                currentTime={this.state.currentTime}
+                togglePlaying={this.togglePlaying}
+                back={this.back}
+                prev={this.prev}
+                playing={playing}
+                percent={percent}
+                resetPercent={this.resetPercent}
+                next={this.next}
+                lyricEl={this.lyricEl}
+                lyricScrollEl={this.lyricScrollEl}
+                currentLyric={this.currentLyric}
+                currentLineNum={this.currentLineNum}
+                playingLyric={this.playingLyric}
+              >
+              </Cd>
+            </div>
+          )}
+        </Transition>
         {/* <ReactCSSTransitionGroup component="span" transitionName="mini" transitionEnterTimeout={300}
           transitionLeaveTimeout={300}>
           { fullScreen ? null : <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer> }

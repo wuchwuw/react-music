@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getSingerDetail } from 'api/singer'
 import { ERR_OK } from 'api/config'
 import { createSong, isValidMusic } from 'common/js/song'
+import { WidthSliderTransition } from 'base/width-slider/width-slider'
 
 class SingerDetail extends Component {
   constructor () {
@@ -42,9 +43,13 @@ class SingerDetail extends Component {
   render () {
     const { name: title, avatar: bgImage } = this.props.singer
     return (
-      <div className="slide">
+      // <WidthSliderTransition {...props}>
+      //   <MusicList songs={this.state.songs} history={this.props.history} title={title} bgImage={bgImage}></MusicList>
+      // </WidthSliderTransition>
+      <WidthSliderTransition>
         <MusicList songs={this.state.songs} history={this.props.history} title={title} bgImage={bgImage}></MusicList>
-      </div>
+      </WidthSliderTransition>
+      // <MusicList songs={this.state.songs} history={this.props.history} title={title} bgImage={bgImage}></MusicList>
     )
   }
 }

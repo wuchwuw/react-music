@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import './mHeader.styl'
+import './header.styl'
 import { Link } from 'react-router-dom'
-import SearchList from './search-list.jsx'
 import { setQuery } from 'store/actions'
 import { connect } from 'react-redux'
-import TransitionGroup from 'react-transition-group/TransitionGroup'
+import history from 'router/history'
 
 class Mheader extends Component {
   constructor () {

@@ -21,12 +21,12 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     alias: {
-      'learn': resolve('src/learn'),
       'components': resolve('src/components'),
       'common': resolve('src/common'),
       'store': resolve('src/store'),
       'api': resolve('src/api'),
-      'base': resolve('src/base')
+      'base': resolve('src/base'),
+      'router': resolve('src/router')
     }
   },
   module: {

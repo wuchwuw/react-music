@@ -93,7 +93,6 @@ export default class Cd extends Component {
     }
     let deltaX = e.touches[0].pageX - this.touch.startX
     let deltaY = e.touches[0].pageY - this.touch.startY
-    console.log(Math.abs(deltaX) < Math.abs(deltaY))
     if (Math.abs(deltaX) < Math.abs(deltaY)) {
       return
     }
@@ -167,7 +166,6 @@ export default class Cd extends Component {
       currentLineNum,
       playingLyric
     } = this.props
-    console.log(lyricList)
     let cTime = this.format(this.props.currentTime)
     let dTime = this.format(currentSong.duration)
     return (

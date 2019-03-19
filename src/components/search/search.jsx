@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import { findRoute } from 'common/js/util'
 import { connect } from 'react-redux'
 import { setSinger } from 'store/actions'
-import SearchList from '../Mheader/search-list'
+import SearchList from 'components/header/search-list'
 import './search.styl'
 
 class Search extends Component {

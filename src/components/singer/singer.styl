@@ -6,14 +6,14 @@
   .slide-enter
     transform: translateX(100%)
     -webkit-transform: translateX(100%)
-    &.slide-enter-active
-      transform: translateX(0)
-      -webkit-transform: translateX(0)
-      transition: all 250ms ease-in-out
-  .slide-leave
+  .slide-enter-active
     transform: translateX(0)
     -webkit-transform: translateX(0)
-    &.slide-leave-active
-      transform: translateX(100%)
-      -webkit-transform: translateX(100%)
-      transition: all 250ms ease-in
+    transition: all 250ms ease-in-out
+  .slide-exit
+    transform: translateX(0)
+    -webkit-transform: translateX(0)
+  .slide-exit-active
+    transform: translateX(100%)
+    -webkit-transform: translateX(100%)
+    transition: all 250ms ease-in
