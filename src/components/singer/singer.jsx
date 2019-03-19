@@ -4,7 +4,7 @@ import { getSingerList } from 'api/singer'
 import { ERR_OK } from 'api/config'
 import ListView from 'base/listview/listview'
 import createSinger from 'common/js/singer'
-import { CSSTransition } from 'react-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { findRoute } from 'common/js/util'
 import { WidthSliderTransition } from 'base/width-slider/width-slider'
 
@@ -79,11 +79,12 @@ export default class Singer extends Component {
     const route = findRoute(routes, 'singerDetail')
     return (
       <div className="singer">
-        <WidthSliderTransition>
-          <div>aaa</div>
-        </WidthSliderTransition>
         <ListView history={history} data={this.state.singer}></ListView>
-        <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
+        <TransitionGroup>
+          <CSSTransition key={this.props.location.pathname} timeout={300} classNames="slider">
+            <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
+         </CSSTransition>
+        </TransitionGroup>
       </div>
     )
   }
