@@ -8,6 +8,7 @@ export const SET_PLAYLIST = 'SET_PLAYLIST'
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG'
 export const SET_TOP_LIST = 'SET_TOP_LIST'
 export const SET_QUERY = 'SET_QUERY'
+export const SET_DISC = 'SET_DISC'
 
 export function setSinger (singer) {
   return {
@@ -73,6 +74,13 @@ export function setTopList (topList) {
   return {
     type: SET_TOP_LIST,
     topList: topList
+  }
+}
+
+export function setDisc (disc) {
+  return {
+    type: SET_DISC,
+    disc: disc
   }
 }
 

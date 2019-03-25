@@ -38,11 +38,11 @@ class ListView extends Component {
       }, 20)
     }
   }
-  componentWillUpdate (nextProps, nextState) {
-    if (this.state.diff !== nextState.diff) {
-      this.diff(nextState.diff)
-    }
-  }
+  // componentWillUpdate (nextProps, nextState) {
+  //   if (this.state.diff !== nextState.diff) {
+  //     this.diff(nextState.diff)
+  //   }
+  // }
   selectItem (e, item) {
     e.preventDefault()
     this.props.history.push(`/singer/${item.id}`)
@@ -60,12 +60,10 @@ class ListView extends Component {
     this.touch.y1 = firstTouch.pageY
     this.touch.anchorIndex = anchorIndex
     this._scrollTo(anchorIndex)
-    console.log(anchorIndex)
   }
   onShortcutTouchMove (e) {
     e.preventDefault()
     e.stopPropagation()
-    console.log('move')
     this.touch.y2 = e.touches[0].pageY
     let detal = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
     let anchorIndex = detal + parseInt(this.touch.anchorIndex)
@@ -132,7 +130,7 @@ class ListView extends Component {
     const { currentIndex } = this.state
     let self = this
     this.fixedTitle = function () {
-      if (self.scrollY > 0) {
+      if (self.scrollY === 0 || self.scrollY === -1) {
         return ''
       }
       return data[currentIndex] ? data[currentIndex].title : ''

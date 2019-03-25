@@ -6,9 +6,10 @@ export const state = {
   fullScreen: false,
   playlist: [],
   sequenceList: [],
-  mode: playMode.sequence,
+  // mode: playMode.sequence,
   currentIndex: -1,
   currentSong: {},
   topList: {},
-  query: ''
+  query: '',
+  disc: {}
 }

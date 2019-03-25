@@ -60,32 +60,18 @@ const config = {
       name: 'manifest'
     },
     splitChunks: {
-      // chunks: "initial"，"async"和"all"分别是：初始块，按需块或所有块；
       chunks: 'all',
-      // （默认值：30000）块的最小大小
       minSize: 30000,
-      // （默认值：1）分割前共享模块的最小块数
       minChunks: 1,
-      // （缺省值5）按需加载时的最大并行请求数
       maxAsyncRequests: 8,
-      // （默认值3）入口点上的最大并行请求数
       maxInitialRequests: 8,
-      // webpack 将使用块的起源和名称来生成名称: `vendors~main.js`,如项目与"~"冲突，则可通过此值修改，Eg: '-'
       automaticNameDelimiter: '~',
-      // cacheGroups is an object where keys are the cache group names.
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
           chunks: 'all'
         }
-        // element: {
-        //   name: 'element',
-        //   test: /[\\/]node_modules[\\/]element-ui[\\/]/,
-        //   chunks: 'all',
-        //   // 默认组的优先级为负数，以允许任何自定义缓存组具有更高的优先级（默认值为0）
-        //   priority: 1
-        // }
       }
     }
   },
@@ -99,7 +85,7 @@ if (isProd) {
     historyApiFallback: true,
     hot: true,
     host: '0.0.0.0',
-    port: 3333,
+    port: 4444,
     inline: true,
     disableHostCheck: true,
     before(app) {
@@ -154,8 +140,8 @@ if (isProd) {
         })
       })
       app.post('/api/getPurlUrl', bodyParser.json(), function (req, res) {
-        const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
         console.log(req.body)
+        const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
         axios.post(url, req.body, {
           headers: {
             referer: 'https://y.qq.com/',
@@ -163,8 +149,30 @@ if (isProd) {
             'Content-type': 'application/x-www-form-urlencoded'
           }
         }).then((response) => {
-          console.log(response.data)
           res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      })
+
+      app.get('/api/getCdInfo', function (req, res) {
+        const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+          let ret = response.data
+          if (typeof ret === 'string') {
+            const reg = /^\w+\(({.+})\)$/
+            const matches = ret.match(reg)
+            if (matches) {
+              ret = JSON.parse(matches[1])
+            }
+          }
+          res.json(ret)
         }).catch((e) => {
           console.log(e)
         })

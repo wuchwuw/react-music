@@ -5,11 +5,10 @@
   position: relative
   height: 44px
   text-align: center
-  color: $color-theme
   font-size: 0
   display: flex
   align-items: center
-  padding-left 15px
+  padding 0 20px
   .icon
     display: inline-block
     vertical-align: top
@@ -31,11 +30,6 @@
       padding: 12px
       font-size: 20px
       color: $color-theme
-  .cancel
-    display: block
-    padding: 12px
-    font-size: 14px
-    color: $color-theme
   .search-box
     flex 1
     display: flex
@@ -44,42 +38,27 @@
     box-sizing: border-box
     padding: 0 6px
     height: 30px
-    background: $color-highlight-background
-    border-radius: 6px
+    background: #ededed
+    border-radius: 30px
     .icon-search
       font-size: 24px
-      color: $color-text-d
+      color: #999999
+      margin-left 5px
     .box
       display: inline-block
       width: 100px
       margin: 0 5px
       line-height: 18px
-      background: $color-highlight-background
-      color: $color-text
+      background: #ededed
       font-size: $font-size-medium
       outline: 0
       transition: all .3s linear
       &::placeholder
-        color: $color-text-d
+        color: #999999
       &.f
         flex 1
     .icon-dismiss
       font-size: 16px
       color: $color-background
-  .normal-enter
-    opacity: 0
-    &.normal-enter-active
-      opacity: 1
-      transition: opacity 0.4s ease-in-out
-  .normal-leave
-    opacity: 1
-    &.normal-leave-active
-      opacity: 0
-      transition: opacity 0.4s ease-in-out
-  .searchList
-    position absolute
-    top 44px
-    left 0
-    width 100%
-    background: $color-background
-    z-index 1
+  .icon-wrap
+    margin-left 10px

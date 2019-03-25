@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 import Scroll from 'base/scroll/scroll'
 import { getTopList } from 'api/rank'
 import { ERR_OK } from 'api/config'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import './rank.styl'
 import { findRoute } from 'common/js/util'
 import { connect } from 'react-redux'
@@ -52,7 +52,7 @@ class Rank extends Component {
                       {
                         top.songList.map((song, index) => (
                           <li key={index} className="song">
-                            <span>{index + 1}</span>
+                            <span>{index + 1}. </span>
                             <span>{song.songname}-{song.singername}</span>
                           </li>
                         ))
@@ -64,9 +64,11 @@ class Rank extends Component {
             </ul>
           </Scroll>
         </div>
-        <ReactCSSTransitionGroup component="div" transitionName="slide" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-          <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
-        </ReactCSSTransitionGroup>
+        <TransitionGroup>
+          <CSSTransition key={location.pathname} timeout={300} classNames="slider">
+            <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
+         </CSSTransition>
+        </TransitionGroup>
       </div>
     )
   }

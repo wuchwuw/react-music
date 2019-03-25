@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Transition } from 'react-transition-group'
+import { CSSTransition, TransitionGroup, Transition } from 'react-transition-group'
 import './player.styl'
 import Cd from './cd'
 import MiniPlayer from './mini-player'
@@ -12,14 +12,13 @@ const timeExp = /\[(\d{2}):(\d{2}):(\d{2})]/g
 const duration = 300
 
 const defaultStyle = {
-  transition: `visibility 0ms opacity ${duration}ms ease-in-out`,
-  visibility: 'hidden',
+  transition: `opacity ${duration}ms ease-in-out`,
   opacity: 0
 }
 
 const transitionStyles = {
-  entering: { visibility: 'hidden', opacity: 0 },
-  entered:  { visibility: 'visible', opacity: 1 },
+  entering: { opacity: 0 },
+  entered:  { opacity: 1 },
 }
 
 class Player extends Component {
@@ -227,36 +226,30 @@ class Player extends Component {
     const { radius } = this.state
     return (
       <div className="player" style={playlist.length > 0 ? {display:'block'} : {display:'none'}}>
-        <Transition
-          in={fullScreen}
-          component="div"
-          classNames="normal"
-          timeout={300}
-        >
-          {/* { fullScreen
-            ?
-            <Cd
-              key="cd"
-              currentSong={currentSong}
-              currentTime={this.state.currentTime}
-              togglePlaying={this.togglePlaying}
-              back={this.back}
-              prev={this.prev}
-              playing={playing}
-              percent={percent}
-              resetPercent={this.resetPercent}
-              next={this.next}
-              lyricEl={this.lyricEl}
-              lyricScrollEl={this.lyricScrollEl}
-              currentLyric={this.currentLyric}
-              currentLineNum={this.currentLineNum}
-              playingLyric={this.playingLyric}
-            >
-            </Cd>
-            :
-            <div></div> } */}
-
-          {state => (
+      { fullScreen ?
+          <Cd
+            key="cd"
+            currentSong={currentSong}
+            currentTime={this.state.currentTime}
+            togglePlaying={this.togglePlaying}
+            back={this.back}
+            prev={this.prev}
+            playing={playing}
+            percent={percent}
+            resetPercent={this.resetPercent}
+            next={this.next}
+            lyricEl={this.lyricEl}
+            lyricScrollEl={this.lyricScrollEl}
+            currentLyric={this.currentLyric}
+            currentLineNum={this.currentLineNum}
+            playingLyric={this.playingLyric}
+          >
+          </Cd>
+          :
+          <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer>
+        }
+        
+          {/* {state => (
             <div style={{
               ...defaultStyle,
               ...transitionStyles[state]
@@ -280,13 +273,30 @@ class Player extends Component {
               >
               </Cd>
             </div>
-          )}
-        </Transition>
+          )} */}
+        {/* <Cd
+          key="cd"
+          currentSong={currentSong}
+          currentTime={this.state.currentTime}
+          togglePlaying={this.togglePlaying}
+          back={this.back}
+          prev={this.prev}
+          playing={playing}
+          percent={percent}
+          resetPercent={this.resetPercent}
+          next={this.next}
+          lyricEl={this.lyricEl}
+          lyricScrollEl={this.lyricScrollEl}
+          currentLyric={this.currentLyric}
+          currentLineNum={this.currentLineNum}
+          playingLyric={this.playingLyric}
+        >
+        </Cd> */}
         {/* <ReactCSSTransitionGroup component="span" transitionName="mini" transitionEnterTimeout={300}
           transitionLeaveTimeout={300}>
           { fullScreen ? null : <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer> }
         </ReactCSSTransitionGroup> */}
-        <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer>
+        {/* <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer> */}
         <audio ref={audio => this.audio = audio} onPlaying={this.ready} onEnded={this.end} onTimeUpdate={e => this.updateTime(e)}></audio>
       </div>
     )

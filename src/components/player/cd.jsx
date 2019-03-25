@@ -3,7 +3,8 @@ import Scroll from 'base/scroll/scroll'
 import animations from 'create-keyframe-animation'
 import ProgressBar from './progress-bar'
 import { prefixStyle } from 'common/js/dom'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { CSSTransition } from 'react-transition-group'
 import './cd.styl'
 
 const transform = prefixStyle('transform')
@@ -17,8 +18,49 @@ export default class Cd extends Component {
     this.middleTouchEnd = this.middleTouchEnd.bind(this)
     this.currentShow = 'cd'
     this.touch = {}
+    this.componentWillEnter = this.componentWillEnter.bind(this)
+  }
+  componentDidMount () {
+    console.log(111)
+    const { x, y, scale } = this._getPosAndScale()
+    let animation = {
+      0: {
+        transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+      },
+      60: {
+        transform: `translate3d(0,0,0) scale(1.1)`
+      },
+      100: {
+        transform: `translate3d(0,0,0) scale(1)`
+      }
+    }
+    animations.registerAnimation({
+      name: 'move',
+      animation,
+      presets: {
+        duration: 400,
+        easing: 'linear'
+      }
+    })
+    this.top.style.animation = 'in 0.4s linear'
+    this.bottom.style.animation = 'fade-in 0.4s linear'
+    animations.runAnimation(this.cdWrapper, 'move', this.componentDidEnter)   
+  }
+  componentWillUnmount () {
+    console.log(222)
+    this.top.style.animation = 'out 0.4s linear'
+    this.bottom.style.animation = 'fade-out 0.4s linear'
+    this.cdWrapper.style.transition = 'all 0.4s'
+    const { x, y, scale } = this._getPosAndScale()
+    this.cdWrapper.style[transform] = `translate3d(${x}px,${y}px,0) scale(${scale})`
+    // const timer = setTimeout(cb, 300)
+    // this.cdWrapper.addEventListener('transitionend', () => {
+    //   clearTimeout(timer)
+    //   cb()
+    // })
   }
   componentWillEnter (cb) {
+    console.log(4444)
     const { x, y, scale } = this._getPosAndScale()
     let animation = {
       0: {
@@ -44,6 +86,7 @@ export default class Cd extends Component {
     animations.runAnimation(this.cdWrapper, 'move', cb)
   }
   componentDidEnter () {
+    console.log(33333)
     animations.unregisterAnimation('move')
     this.cdWrapper.style.animation = ''
     this.top.style.animation = ''
@@ -159,7 +202,6 @@ export default class Cd extends Component {
       playing,
       percent,
       resetPercent,
-      lyricList,
       currentLyric,
       lyricEl,
       lyricScrollEl,
@@ -196,17 +238,20 @@ export default class Cd extends Component {
               <div className="playing-lyric">{playingLyric}</div>
             </div>
           </div>
-          <div className="middle-r" ref={lyricList => this.lyricList = lyricList}>
-            <Scroll ref={lyricScrollEl} data={currentLyric && currentLyric.lines}>
-              <div className="lyric-wrapper" ref={lyricEl}>
-                {
-                  currentLyric && currentLyric.lines.map((line, index) => (
-                    <p className={currentLineNum === index ? 'text current' : 'text'} key={index}>{line.txt}</p>
-                  ))
-                }
-              </div>
-            </Scroll>
-          </div>
+          {
+            currentLyric &&
+            <div className="middle-r" ref={lyricList => this.lyricList = lyricList}>
+              <Scroll ref={lyricScrollEl} data={currentLyric.lines}>
+                <div className="lyric-wrapper" ref={lyricEl}>
+                  {
+                    currentLyric && currentLyric.lines.map((line, index) => (
+                      <p className={currentLineNum === index ? 'text current' : 'text'} key={index}>{line.txt}</p>
+                    ))
+                  }
+                </div>
+              </Scroll>
+            </div>
+          }
         </div>
         <div className="bottom">
           <div className="dot-wrapper">

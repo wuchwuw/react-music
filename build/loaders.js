@@ -28,13 +28,11 @@ module.exports = [
   },
   {
     test: /\.styl$/,
-    use: [{
-        loader: "style-loader" // creates style nodes from JS strings
-    }, {
-        loader: "css-loader" // translates CSS into CommonJS
-    }, {
-        loader: "stylus-loader" // compiles Less to CSS
-    }]
+    use: [
+      isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+      'css-loader',
+      'stylus-loader'
+    ]
   },
   {
     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,

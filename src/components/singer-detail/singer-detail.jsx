@@ -4,9 +4,7 @@ import './singer-detail.styl'
 import { connect } from 'react-redux'
 import { getSingerDetail } from 'api/singer'
 import { ERR_OK } from 'api/config'
-import { createSong, isValidMusic } from 'common/js/song'
-import { WidthSliderTransition } from 'base/width-slider/width-slider'
-import { CSSTransition } from 'react-transition-group'
+import { createSong, isValidMusic, processSongsUrl } from 'common/js/song'
 
 class SingerDetail extends Component {
   constructor () {
@@ -25,8 +23,10 @@ class SingerDetail extends Component {
     }
     getSingerDetail(this.props.singer.id).then((res) => {
       if (res.code === ERR_OK) {
-        this.setState({
-          songs: this._normalizeSongs(res.data.list)
+        processSongsUrl(this._normalizeSongs(res.data.list)).then((songs) => {
+          this.setState({
+            songs
+          })
         })
       }
     })

@@ -3,14 +3,20 @@ import { getDiscList } from 'api/recommend'
 import { ERR_OK } from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
+import { findRoute } from 'common/js/util'
 import './recommend.styl'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setDisc } from 'store/actions'
 
-export default class Recommend extends Component {
+class Recommend extends Component {
   constructor (props) {
     super(props)
     this.state = {
       discList: []
     }
+    this.selectItem = this.selectItem.bind(this)
   }
   componentDidMount () {
     this._getDiscList()
@@ -25,7 +31,16 @@ export default class Recommend extends Component {
         }
       })
   }
+
+  selectItem (item) {
+    this.props.history.push(`/recommend/${item.dissid}`)
+    this.props.setDisc(item)
+  }
+
   render () {
+    const { history, routes, location } = this.props
+    const route = findRoute(routes, 'disc')
+
     return (
       <div className="recommend">
         <div className="recommend-content">
@@ -35,11 +50,11 @@ export default class Recommend extends Component {
                 <Slider></Slider>
               </div>
               <div className="recommend-list">
-                <h1 className="list-title">热门歌单推荐</h1>
+                <h1 className="list-title">推荐歌单</h1>
                 <ul>
                   {
                     this.state.discList.map((item, index) => (
-                      <li key={item.dissid} className="item">
+                      <li onClick={() => { this.selectItem(item)}} key={item.dissid} className="item">
                         <div className="icon">
                           <img width="60" height="60" src={item.imgurl} alt=""/>
                         </div>
@@ -55,7 +70,26 @@ export default class Recommend extends Component {
             </div>
           </Scroll>
         </div>
+        <TransitionGroup>
+          <CSSTransition key={location.pathname} timeout={300} classNames="slider">
+            <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
+         </CSSTransition>
+        </TransitionGroup>
       </div>
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {}
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    setDisc: (disc) => {
+      dispatch(setDisc(disc))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recommend)

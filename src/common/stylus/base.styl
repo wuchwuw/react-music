@@ -1,9 +1,19 @@
 @import "variable.styl"
 
 body, html
-  line-height: 1
-  font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback'
-  user-select: none
-  -webkit-tap-highlight-color: transparent
-  background: $color-background
-  color: $color-text
+  line-height 1
+  font-family 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback'
+  user-select none
+  -webkit-tap-highlight-color transparent
+  color $color-main-text
+
+.slider-enter
+  transform translateX(100%)
+.slider-enter-active
+  transform translateX(0)
+  transition all 250ms ease-in-out
+.slider-exit
+  transform translateX(0)
+.slider-exit-active
+  transform translateX(100%)
+  transition all 250ms ease-in

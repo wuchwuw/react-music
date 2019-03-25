@@ -7,7 +7,8 @@ import {
   SET_PLAYING_STATE,
   SET_CURRENT_SONG,
   SET_TOP_LIST,
-  SET_QUERY
+  SET_QUERY,
+  SET_DISC
 } from './actions'
 import { combineReducers } from 'redux'
 
@@ -75,7 +76,14 @@ function setTopList (state={}, action) {
       return state
   }
 }
-
+function setDisc (state={}, action) {
+  switch (action.type) {
+    case SET_DISC:
+      return action.disc
+    default:
+      return state
+  }
+}
 function setQuery (state = {}, action) {
   switch (action.type) {
     case SET_QUERY:
@@ -93,7 +101,8 @@ const rootReducer = combineReducers({
   fullScreen: setFullScreen,
   currentSong: setCurrentSong,
   topList: setTopList,
-  query: setQuery
+  query: setQuery,
+  disc: setDisc
 })
 
 export default rootReducer

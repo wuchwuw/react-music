@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --colors --config build/webpack.config.js",
     "build": "webpack --progress --hide-modules --config build/webpack.config.js",
-    "build:dev": "NODE_ENV=dev npm run build",
-    "build:prod": "NODE_ENV=production npm run build"
+    "build:dev": "NODE_ENV=dev yarn run build",
+    "build:prod": "NODE_ENV=production yarn run build",
+    "build:analyze": "NODE_ENV=production analyze=true yarn run build"
   },
   "repository": {
     "type": "git",

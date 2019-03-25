@@ -6,12 +6,11 @@ import ListView from 'base/listview/listview'
 import createSinger from 'common/js/singer'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { findRoute } from 'common/js/util'
-import { WidthSliderTransition } from 'base/width-slider/width-slider'
 
 import './singer.styl'
 
 const HOT_NAME = '热门'
-const HOT_SINGER_LEN = 10
+const HOT_SINGER_LEN = 20
 
 export default class Singer extends Component {
   constructor () {
@@ -75,7 +74,7 @@ export default class Singer extends Component {
     return hot.concat(ret)
   }
   render () {
-    const { match, history, routes, location } = this.props
+    const { history, routes, location } = this.props
     const route = findRoute(routes, 'singerDetail')
     return (
       <div className="singer">

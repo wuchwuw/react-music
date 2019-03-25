@@ -26,7 +26,6 @@ export default class Song {
     }
     return new Promise((resolve, reject) => {
       getLyric(this.mid).then((res) => {
-        console.log(res)
         if (res.code === ERR_OK) {
           this.lyric = Base64.decode(res.lyric)
           resolve(this.lyric)
@@ -81,10 +80,14 @@ export function processSongsUrl(songs) {
   if (!songs.length) {
     return Promise.resolve(songs)
   }
-  return getSongsUrl(songs).then((midUrlInfo) => {
-    midUrlInfo.forEach((info, index) => {
-      let song = songs[index]
-      song.url = info.purl.indexOf('http') === -1 ? `http://dl.stream.qqmusic.qq.com/${info.purl}` : info.purl
+  return getSongsUrl(songs).then((purlMap) => {
+    songs = songs.filter((song) => {
+      const purl = purlMap[song.mid]
+      if (purl) {
+        song.url = purl.indexOf('http') === -1 ? `http://dl.stream.qqmusic.qq.com/${purl}` : purl
+        return true
+      }
+      return false
     })
     return songs
   })

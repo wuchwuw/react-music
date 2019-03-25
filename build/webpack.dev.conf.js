@@ -32,7 +32,7 @@ module.exports = merge(webpackBaseConf, {
   },
   devServer: {
     historyApiFallback: true,
-    contentBase: '../dist',
+    port: 1000,
     hot: true,
     host: '0.0.0.0',
     inline: true,

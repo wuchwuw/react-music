@@ -4,6 +4,8 @@ import { getHotKey, search } from 'api/search'
 import { is } from 'immutable'
 import { ERR_OK } from 'api/config'
 import { createSong, isValidMusic, processSongsUrl } from 'common/js/song'
+import Singer from 'common/js/singer'
+import { debounce } from 'common/js/util'
 import Scroll from 'base/scroll/scroll'
 import { setSinger, insertSong } from 'store/actions'
 import { connect } from 'react-redux'
@@ -27,6 +29,7 @@ class SearchList extends Component {
     this.getDisplayName = this.getDisplayName.bind(this)
     this.searchMore = this.searchMore.bind(this)
     this.selectItem = this.selectItem.bind(this)
+    this.search = debounce(this.search, 1000).bind(this)
   }
 
   componentDidMount () {
@@ -34,7 +37,7 @@ class SearchList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!is(nextProps.query, this.props.query)) {
+    if (nextProps.query && !is(nextProps.query, this.props.query)) {
       setTimeout(() => {
         this.search()
       }, 20)
@@ -46,14 +49,10 @@ class SearchList extends Component {
     if (data.zhida && data.zhida.singerid && this.page === 1) {
       ret.push({...data.zhida, ...{type: TYPE_SINGER}})
     }
-    ret = ret.concat(this._normalizeSongs(data.song.list))
-    // return processSongsUrl(this._normalizeSongs(data.song.list)).then((songs) => {
-    //   console.log(songs)
-    //   ret = ret.concat(songs)
-    //   console.log(ret)
-    //   return ret
-    // })
-    return Promise.resolve(ret)
+    return processSongsUrl(this._normalizeSongs(data.song.list)).then((songs) => {
+      ret = ret.concat(songs)
+      return ret
+    })
   }
 
   _checkMore(data) {
@@ -149,10 +148,10 @@ class SearchList extends Component {
 
   selectItem(item) {
     if (item.type === TYPE_SINGER) {
-      let singer = {
+      let singer = new Singer({
         id: item.singermid,
         name: item.singername
-      }
+      })
       this.props.history.push(`/search/${singer.id}`)
       this.props.dispatch(setSinger(singer))
     } else {
@@ -163,7 +162,7 @@ class SearchList extends Component {
 
   render () {
     let { hotKey, result, hasMore } = this.state
-    let { query } = this.props
+    let { query, setQuery } = this.props
     return (
       <div className="wrap">
         {
@@ -173,7 +172,7 @@ class SearchList extends Component {
             <ul>
               {
                 hotKey.map((item) => (
-                  <li key={item.k} className="item">
+                  <li onClick={() => {setQuery(item.k)}} key={item.k} className="item">
                     <span>{item.k}</span>
                   </li>
                 ))
@@ -217,13 +216,11 @@ class SearchList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { query } = state
-  return {
-    query
-  }
-}
+// const mapStateToProps = (state) => {
+//   const { query } = state
+//   return {
+//     query
+//   }
+// }
 
-export default connect(
-  mapStateToProps
-)(SearchList)
+export default connect()(SearchList)

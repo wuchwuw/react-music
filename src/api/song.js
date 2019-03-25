@@ -76,13 +76,17 @@ export function getSongsUrl(songs) {
         req_0: urlMid
       }).then((response) => {
         const res = response.data
-        console.log(res)
         if (res.code === ERR_OK) {
           let urlMid = res.req_0
           if (urlMid && urlMid.code === ERR_OK) {
-            const info = urlMid.data.midurlinfo[0]
-            if (info && info.purl) {
-              resolve(urlMid.data.midurlinfo)
+            const purlMap = {}
+            urlMid.data.midurlinfo.forEach((item) => {
+              if (item.purl) {
+                purlMap[item.songmid] = item.purl
+              }
+            })
+            if (Object.keys(purlMap).length > 0) {
+              resolve(purlMap)
             } else {
               retry()
             }

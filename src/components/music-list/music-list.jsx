@@ -20,8 +20,8 @@ class MuiscList extends Component {
   }
   componentDidMount () {
     this.imageHeight = this.bgImage.clientHeight
-    this.minTransalteY = -this.imageHeight + RESERVED_HEIGHT
-    this.list.style.top = `${this.imageHeight}px`
+    this.minTransalteY = -this.imageHeight + RESERVED_HEIGHT + 20
+    this.list.style.top = `${this.imageHeight - 20}px`
   }
   back () {
     this.props.history.goBack()
@@ -34,7 +34,7 @@ class MuiscList extends Component {
     const percent = Math.abs(pos.y / this.imageHeight)
     if (pos.y > 0) {
       scale = 1 + percent
-      zIndex = 10
+      // zIndex = 10
     } else {
       blur = Math.min(20, percent * 20)
     }
@@ -44,11 +44,11 @@ class MuiscList extends Component {
       zIndex = 10
       this.bgImage.style.paddingTop = 0
       this.bgImage.style.height = `${RESERVED_HEIGHT}px`
-      this.playBtn.style.display = 'none'
+      // this.playBtn.style.display = 'none'
     } else {
       this.bgImage.style.paddingTop = '70%'
       this.bgImage.style.height = 0
-      this.playBtn.style.display = ''
+      // this.playBtn.style.display = ''
     }
     this.bgImage.style[transform] = `scale(${scale})`
     this.bgImage.style.zIndex = zIndex
@@ -64,10 +64,10 @@ class MuiscList extends Component {
         <h1 className="title">{title}</h1>
         <div className="bg-image" style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
           <div className="play-wrap">
-            <div className="play" ref={playBtn => this.playBtn = playBtn}>
+            {/* <div className="play" ref={playBtn => this.playBtn = playBtn}>
               <i className="icon-play"></i>
               <span className="text">随机播放全部</span>
-            </div>
+            </div> */}
           </div>
           <div className="filter" ref={filter => { this.filter = filter }}></div>
         </div>
