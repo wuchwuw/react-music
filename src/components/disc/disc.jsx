@@ -23,10 +23,6 @@ class Disc extends Component {
     }
     getSongList(this.props.disc.dissid).then((res) => {
       if (res.code === ERR_OK) {
-        console.log(res)
-        // this.setState({
-        //   songs: this._normalizeSongs(res.cdlist[0].songlist)
-        // })
         processSongsUrl(this._normalizeSongs(res.cdlist[0].songlist)).then((songs) => {
           this.setState({
             songs

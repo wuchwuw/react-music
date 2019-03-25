@@ -7,6 +7,7 @@ import MiniPlayer from './mini-player'
 import { setFullScreen, setCurrentIndex, setCurrentSong, setPlayingState } from 'store/actions'
 import { is } from 'immutable'
 import Lyric from 'lyric-parser'
+import animations from 'create-keyframe-animation'
 
 const timeExp = /\[(\d{2}):(\d{2}):(\d{2})]/g
 const duration = 300
@@ -45,6 +46,9 @@ class Player extends Component {
     this.lyricScrollEl = this.lyricScrollEl.bind(this)
     this.lyricEl = this.lyricEl.bind(this)
     this.handleLyric = this.handleLyric.bind(this)
+    this.onEnter = this.onEnter.bind(this)
+    this.onExit = this.onExit.bind(this)
+    this.onEntered = this.onEntered.bind(this)
   }
   componentDidMount () {
     this.timer = null
@@ -220,13 +224,86 @@ class Player extends Component {
   lyricScrollEl (el) {
     this.lyricList = el
   }
+  onEnter (node) {
+    let top = node.querySelector('.top')
+    let bottom = node.querySelector('.bottom')
+    let cdWrapper = node.querySelector('.cd-wrapper')
+    const { x, y, scale } = this._getPosAndScale()
+    let animation = {
+      0: {
+        transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+      },
+      60: {
+        transform: `translate3d(0,0,0) scale(1.1)`
+      },
+      100: {
+        transform: `translate3d(0,0,0) scale(1)`
+      }
+    }
+    animations.registerAnimation({
+      name: 'move',
+      animation,
+      presets: {
+        duration: 400,
+        easing: 'linear'
+      }
+    })
+    top.style.animation = 'in 0.4s linear'
+    bottom.style.animation = 'fade-in 0.4s linear'
+    animations.runAnimation(cdWrapper, 'move', () => {})
+  }
+
+  onEntered (node) {
+    let top = node.querySelector('.top')
+    let bottom = node.querySelector('.bottom')
+    let cdWrapper = node.querySelector('.cd-wrapper')
+    animations.unregisterAnimation('move')
+    cdWrapper.style.animation = ''
+    top.style.animation = ''
+    bottom.style.animation = ''
+  }
+
+  onExit (node) {
+    let top = node.querySelector('.top')
+    let bottom = node.querySelector('.bottom')
+    let cdWrapper = node.querySelector('.cd-wrapper')
+    top.style.animation = 'out 0.4s linear'
+    bottom.style.animation = 'fade-out 0.4s linear'
+    cdWrapper.style.transition = 'all 0.4s'
+    const { x, y, scale } = this._getPosAndScale()
+    cdWrapper.style['transform'] = `translate3d(${x}px,${y}px,0) scale(${scale})`
+  }
+
+  _getPosAndScale () {
+    const targetWidth = 40
+    const paddingLeft = 40
+    const paddingBottom = 30
+    const paddingTop = 80
+    const width = window.innerWidth * 0.8
+    const scale = targetWidth / width
+    const x = -(window.innerWidth / 2 - paddingLeft)
+    const y = window.innerHeight - paddingTop - width / 2 - paddingBottom
+    return {
+      x,
+      y,
+      scale
+    }
+  }
   render () {
     const { fullScreen, location, playing, currentSong, playlist } = this.props
     const percent = this.state.currentTime / currentSong.duration
     const { radius } = this.state
     return (
       <div className="player" style={playlist.length > 0 ? {display:'block'} : {display:'none'}}>
-      { fullScreen ?
+      <CSSTransition
+        in={fullScreen}
+        timeout={400}
+        onEnter={this.onEnter}
+        onEntered={this.onEntered}
+        onExit={this.onExit}
+        classNames="fade"
+        unmountOnExit
+      >
           <Cd
             key="cd"
             currentSong={currentSong}
@@ -245,10 +322,12 @@ class Player extends Component {
             playingLyric={this.playingLyric}
           >
           </Cd>
-          :
-          <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer>
+      </CSSTransition>
+        {
+          !fullScreen &&
+            <MiniPlayer percent={percent} key="mini" currentSong={currentSong}></MiniPlayer>
         }
-        
+
           {/* {state => (
             <div style={{
               ...defaultStyle,

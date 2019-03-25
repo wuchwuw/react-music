@@ -54,7 +54,7 @@ class MuiscList extends Component {
     this.bgImage.style.zIndex = zIndex
   }
   render () {
-    const { title, bgImage } = this.props
+    const { title, bgImage, rank } = this.props
     const bgStyle = { backgroundImage: `url(${bgImage}`}
     return (
       <div className="music-list">
@@ -62,7 +62,7 @@ class MuiscList extends Component {
           <i className="icon-back"></i>
         </div>
         <h1 className="title">{title}</h1>
-        <div className="bg-image" style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
+        <div className={rank ? 'bg-image bg-rank' : 'bg-image'} style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
           <div className="play-wrap">
             {/* <div className="play" ref={playBtn => this.playBtn = playBtn}>
               <i className="icon-play"></i>

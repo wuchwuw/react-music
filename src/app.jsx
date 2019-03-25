@@ -19,6 +19,7 @@ export default class App extends Component {
               <Mheader/>
               <Tab />
             </div>
+            <Player></Player>
             <Suspense fallback={<div></div>}>
               <Switch>
                 {
@@ -31,7 +32,6 @@ export default class App extends Component {
                 <Redirect from="/" to="/recommend" />
               </Switch>
             </Suspense>
-            <Player></Player>
           </div>
         </Router>
       </Provider>

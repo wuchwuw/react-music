@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { getDiscList } from 'api/recommend'
 import { ERR_OK } from 'api/config'
 import Slider from 'base/slider/slider'
@@ -10,17 +10,31 @@ import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setDisc } from 'store/actions'
 
-class Recommend extends Component {
+class Recommend extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
       discList: []
     }
     this.selectItem = this.selectItem.bind(this)
+    this.handlePlaylist = this.handlePlaylist.bind(this)
   }
+
   componentDidMount () {
     this._getDiscList()
   }
+
+  getSnapshotBeforeUpdate () {
+    return this.props.playlist.length > 0
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot) {
+      this.recommend.style.bottom = '60px'
+      this.scroll.refresh()
+    }
+  }
+
   _getDiscList () {
     getDiscList()
       .then((res) => {
@@ -30,6 +44,13 @@ class Recommend extends Component {
           })
         }
       })
+  }
+
+  handlePlaylist () {
+    if (this.props.playlist.length > 0) {
+      this.recommend.style.bottom = '60px'
+      this.scroll.refresh()
+    }
   }
 
   selectItem (item) {
@@ -42,9 +63,9 @@ class Recommend extends Component {
     const route = findRoute(routes, 'disc')
 
     return (
-      <div className="recommend">
+      <div className="recommend" ref={(recommend) => { this.recommend = recommend }}>
         <div className="recommend-content">
-          <Scroll data={this.state.discList}>
+          <Scroll data={this.state.discList} ref={(scroll) => { this.scroll = scroll }}>
             <div>
               <div className="slider-wrapper">
                 <Slider></Slider>
@@ -81,7 +102,9 @@ class Recommend extends Component {
 }
 
 function mapStateToProps (state) {
-  return {}
+  return {
+    playlist: state.playlist
+  }
 }
 
 function mapDispatchToProps (dispatch) {

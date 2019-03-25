@@ -42,9 +42,9 @@ class TopList extends Component {
   render () {
     const { history, topList } = this.props
     const { songs } = this.state
-    const title = topList.topTitle
-    const bgImage = songs.length > 0 ? songs[0].image : ''
-    return <MusicList history={history} rank={this.rank} title={title} bgImage={bgImage} songs={songs}></MusicList>
+    const title = ''
+    const bgImage = topList.picUrl
+    return <MusicList history={history} rank={true} title={title} bgImage={bgImage} songs={songs}></MusicList>
   }
 }
 
