@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { Route } from 'react-router-dom'
 import { findRoute } from 'common/js/util'
 import { connect } from 'react-redux'
@@ -51,9 +51,11 @@ class Search extends Component {
         <div onClick={this.clear} className="cancel">取消</div>
       </div>
         <SearchList setQuery={setQuery} query={query} history={history}></SearchList>
-        <ReactCSSTransitionGroup component="div" transitionName="slider" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-          <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
-        </ReactCSSTransitionGroup>
+        <TransitionGroup>
+          <CSSTransition key={location.pathname} timeout={300} classNames="slider">
+            <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
+         </CSSTransition>
+        </TransitionGroup>
       </div>
     )
   }

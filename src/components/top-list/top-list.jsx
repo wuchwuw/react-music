@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { getMusicList } from 'api/rank'
 import { ERR_OK } from 'api/config'
-import { createSong, isValidMusic } from 'common/js/song'
+import { createSong, isValidMusic, processSongsUrl } from 'common/js/song'
 import MusicList from 'components/music-list/music-list'
 import { connect } from 'react-redux'
 
@@ -23,8 +23,10 @@ class TopList extends Component {
     }
     getMusicList(this.props.topList.id).then((res) => {
       if (res.code === ERR_OK) {
-        this.setState({
-          songs: this._normalizeSongs(res.songlist)
+        processSongsUrl(this._normalizeSongs(res.songlist)).then((songs) => {
+          this.setState({
+            songs
+          })
         })
       }
     })

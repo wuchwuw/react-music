@@ -60,7 +60,6 @@ export default class Slider extends Component {
     })
   }
   _setSliderWidth (isResize) {
-    console.log('_setSliderWidth')
     const { loop } = this.props
     let sliderWidth = this.slider.clientWidth
     this.children = this.sliderChildren.children

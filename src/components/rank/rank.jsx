@@ -20,6 +20,18 @@ class Rank extends Component {
   componentDidMount () {
     this._getTopList()
   }
+
+  getSnapshotBeforeUpdate () {
+    return this.props.playlist.length > 0
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot) {
+      this.rank.style.bottom = '60px'
+      this.scroll.refresh()
+    }
+  }
+
   _getTopList() {
     getTopList().then((res) => {
       if (res.code === ERR_OK) {
@@ -38,9 +50,9 @@ class Rank extends Component {
     const { match, history, routes, location } = this.props
     const route = findRoute(routes, 'rankDetail')
     return (
-      <div className="rank">
+      <div className="rank" ref={(rank) => {this.rank = rank}}>
         <div className="toplist">
-          <Scroll data={topList}>
+          <Scroll data={topList} ref={(scroll) => {this.scroll = scroll}}>
             <ul>
               {
                 topList.map((top, i) => (
@@ -73,9 +85,13 @@ class Rank extends Component {
     )
   }
 }
+
 function mapStateToProps (state) {
-  return {}
+  return {
+    playlist: state.playlist
+  }
 }
+
 function mapDispatchToProps (dispatch) {
   return {
     setTopList: (topList) => {

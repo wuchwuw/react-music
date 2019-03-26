@@ -29,6 +29,7 @@ export function selectPlay (list, index) {
 }
 
 export function setCurrentSong (song) {
+  song && (document.title = `[正在播放]${song.name}-${song.singer}`)
   return {
     type: SET_CURRENT_SONG,
     currentSong: song

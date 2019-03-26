@@ -29,7 +29,7 @@ class SearchList extends Component {
     this.getDisplayName = this.getDisplayName.bind(this)
     this.searchMore = this.searchMore.bind(this)
     this.selectItem = this.selectItem.bind(this)
-    this.search = debounce(this.search, 1000).bind(this)
+    this.search = debounce(this.search, 200, true).bind(this)
   }
 
   componentDidMount () {
@@ -107,6 +107,7 @@ class SearchList extends Component {
   }
 
   search() {
+    console.log('search')
     let { query } =  this.props
     this.page = 1
     this.setState({

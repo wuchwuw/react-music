@@ -18,14 +18,28 @@ class MuiscList extends Component {
     this.listenScroll = true
     this.scroll = this.scroll.bind(this)
   }
+
   componentDidMount () {
     this.imageHeight = this.bgImage.clientHeight
     this.minTransalteY = -this.imageHeight + RESERVED_HEIGHT + 20
     this.list.style.top = `${this.imageHeight - 20}px`
   }
+
   back () {
     this.props.history.goBack()
   }
+
+  getSnapshotBeforeUpdate () {
+    return this.props.playlist.length > 0
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot) {
+      this.list.style.bottom = '60px'
+      this.scrollRef.refresh()
+    }
+  }
+
   scroll (pos) {
     let translateY = Math.max(this.minTransalteY, pos.y)
     let scale = 1
@@ -63,17 +77,22 @@ class MuiscList extends Component {
         </div>
         <h1 className="title">{title}</h1>
         <div className={rank ? 'bg-image bg-rank' : 'bg-image'} style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
-          <div className="play-wrap">
-            {/* <div className="play" ref={playBtn => this.playBtn = playBtn}>
+          {/* <div className="play-wrap">
+            <div className="play" ref={playBtn => this.playBtn = playBtn}>
               <i className="icon-play"></i>
               <span className="text">随机播放全部</span>
-            </div> */}
-          </div>
+            </div>
+          </div> */}
           <div className="filter" ref={filter => { this.filter = filter }}></div>
         </div>
         <div className="bg-layer" ref={layer => { this.layer = layer }}></div>
         <div className="list" ref={list => this.list = list}>
-          <Scroll data={this.props.songs} scroll={this.scroll} listenScroll={this.listenScroll} probeType={this.probeType}>
+          <Scroll 
+            ref={(scroll) => {this.scrollRef = scroll}} 
+            data={this.props.songs} 
+            scroll={this.scroll} 
+            listenScroll={this.listenScroll} 
+            probeType={this.probeType}>
             <div className="song-list-wrapper">
               <SongList songs={this.props.songs}></SongList>
             </div>
@@ -83,4 +102,11 @@ class MuiscList extends Component {
     )
   }
 }
-export default connect()(MuiscList)
+
+function mapStateToProps (state) {
+  return {
+    playlist: state.playlist
+  }
+}
+
+export default connect(mapStateToProps, null)(MuiscList)

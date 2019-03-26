@@ -10,12 +10,13 @@ const isProd = process.env.NODE_ENV === 'production'
 const config = {
   mode: isProd ? 'production' : 'development',
   entry: {
-    main: resolve('src/main.js')
+    main: resolve('src/main.js'),
+    vendor: ['react', 'react-dom', 'redux', 'react-router', 'react-router-dom']
   },
   output: {
     path: resolve('dist'),
     publicPath: '/',
-    filename: '[name].[hash:8].js',
+    filename: '[name].js',
     chunkFilename: '[name].[id].[hash:8].js'
   },
   resolve: {
@@ -67,15 +68,16 @@ const config = {
       maxInitialRequests: 8,
       automaticNameDelimiter: '~',
       cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
+        vendor: {
+          chunks: 'initial',
           name: 'vendor',
-          chunks: 'all'
+          test: 'vendor',
+          enforce: true
         }
       }
     }
   },
-  devtool: isProd ? '#source-map' : 'cheap-module-eval-source-map'
+  devtool: isProd ? '' : 'cheap-module-eval-source-map'
 }
 
 if (isProd) {

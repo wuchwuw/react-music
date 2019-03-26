@@ -2,6 +2,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const WorkboxPlugin = require('workbox-webpack-plugin')
+const { resolve } = require('./util')
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -10,6 +12,44 @@ let plugins = [
     'process.env': {
       NODE_ENV: '"'+ process.env.NODE_ENV + '"',
     }
+  }),
+  // new WorkboxPlugin.InjectManifest({
+  //   swSrc: resolve('sw.js'),
+  // }),
+  new WorkboxPlugin.GenerateSW({
+    swDest: 'server-work.js',
+    // importWorkboxFrom: 'local',
+    skipWaiting: true,
+    runtimeCaching: [
+      {
+        urlPattern: /\.(js|css)$/,
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheName: 'chunck'
+        }
+      },
+      {
+        urlPattern: /\.(html)$/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'page'
+        }
+      },
+      {
+        urlPattern: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'fonts'
+        }
+      },
+      {
+        urlPattern: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'images'
+        }
+      }
+    ]
   })
   // new webpack.ProvidePlugin({
   //   mapActions: ['vuex', 'mapActions'],
