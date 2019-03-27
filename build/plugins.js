@@ -72,6 +72,7 @@ if (isProd) {
       filename: 'index.html',
       template: 'src/index.html',
       inject: true,
+      favicon: 'src/favicon.ico',
       chunksSortMode: 'dependency',
       minify: {
         // https://github.com/kangax/html-minifier#options-quick-reference

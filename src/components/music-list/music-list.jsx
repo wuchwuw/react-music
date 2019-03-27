@@ -56,8 +56,8 @@ class MuiscList extends Component {
     this.filter.style[backdrop] = `blur(${blur}px)`
     if (pos.y < this.minTransalteY) {
       zIndex = 10
-      // this.bgImage.style.paddingTop = 0
-      // this.bgImage.style.height = `${RESERVED_HEIGHT}px`
+      this.bgImage.style.paddingTop = 0
+      this.bgImage.style.height = `${RESERVED_HEIGHT}px`
       // this.playBtn.style.display = 'none'
     } else {
       this.bgImage.style.paddingTop = '70%'
