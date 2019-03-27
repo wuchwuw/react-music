@@ -198,6 +198,7 @@ class Player extends Component {
           this.currentLyric.seek(this.currentTime * 1000)
         }
       }
+      this.setState({})
     }).catch((e) => {
       conosl.log(e)
       this.currentLyric = null
@@ -290,9 +291,8 @@ class Player extends Component {
     }
   }
   render () {
-    const { fullScreen, location, playing, currentSong, playlist } = this.props
+    const { fullScreen, playing, currentSong, playlist } = this.props
     const percent = this.state.currentTime / currentSong.duration
-    const { radius } = this.state
     return (
       <div className="player" style={playlist.length > 0 ? {display:'block'} : {display:'none'}}>
       <CSSTransition

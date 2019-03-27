@@ -3,10 +3,48 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>demo</title>
+    <title>随便听听</title>
+    <style>
+      html, body {
+        padding: 0;
+        margin: 0;
+      }
+      .header {
+        padding: 0 20px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+      }
+      .search {
+        height: 30px;
+        background: #ededed;
+        border-radius: 30px;
+        flex: 1;
+      }
+      .tab {
+        display: flex
+      }
+      .tab > div {
+        height: 40px;
+        flex: 1;
+        text-align: center;
+        line-height: 40px;
+        font-size: 14px
+      }
+    </style>
   </head>
   <body>
     <div id="root">
+      <div class="dom-placeholder">
+        <div class="header">
+          <div class="search"></div>
+        </div>
+        <div class="tab">
+          <div>推荐</div>
+          <div>歌手</div>
+          <div>排行</div>
+        </div>
+      </div>
     </div>
     <script>
       if ('serviceWorker' in navigator) {
@@ -20,6 +58,6 @@
           })
         })
       }
-    </script>  
+    </script>
   </body>
 </html>

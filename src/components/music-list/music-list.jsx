@@ -56,8 +56,8 @@ class MuiscList extends Component {
     this.filter.style[backdrop] = `blur(${blur}px)`
     if (pos.y < this.minTransalteY) {
       zIndex = 10
-      this.bgImage.style.paddingTop = 0
-      this.bgImage.style.height = `${RESERVED_HEIGHT}px`
+      // this.bgImage.style.paddingTop = 0
+      // this.bgImage.style.height = `${RESERVED_HEIGHT}px`
       // this.playBtn.style.display = 'none'
     } else {
       this.bgImage.style.paddingTop = '70%'
@@ -87,11 +87,11 @@ class MuiscList extends Component {
         </div>
         <div className="bg-layer" ref={layer => { this.layer = layer }}></div>
         <div className="list" ref={list => this.list = list}>
-          <Scroll 
-            ref={(scroll) => {this.scrollRef = scroll}} 
-            data={this.props.songs} 
-            scroll={this.scroll} 
-            listenScroll={this.listenScroll} 
+          <Scroll
+            ref={(scroll) => {this.scrollRef = scroll}}
+            data={this.props.songs}
+            scroll={this.scroll}
+            listenScroll={this.listenScroll}
             probeType={this.probeType}>
             <div className="song-list-wrapper">
               <SongList songs={this.props.songs}></SongList>
