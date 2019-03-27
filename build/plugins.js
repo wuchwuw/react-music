@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const WorkboxPlugin = require('workbox-webpack-plugin')
-const { resolve } = require('./util')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -61,6 +61,7 @@ let plugins = [
 
 if (isProd) {
   plugins = plugins.concat([
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -78,7 +79,7 @@ if (isProd) {
         collapseWhitespace: true
       },
       cnzz: true
-    }),
+    })
   ])
 } else {
   plugins = plugins.concat([

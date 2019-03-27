@@ -1,9 +1,14 @@
 pipeline {
-    agent { docker 'node:6.3' }
+    agent { docker 'node:10.15.3' }
     stages {
-        stage('build') {
+        stage('Install') {
             steps {
-                sh 'npm --version'
+                sh 'yarn'
+            }
+        }
+        state('Build') {
+            stpes {
+              sh 'yarn build:prod'
             }
         }
     }
