@@ -142,7 +142,6 @@ if (isProd) {
         })
       })
       app.post('/api/getPurlUrl', bodyParser.json(), function (req, res) {
-        console.log(req.body)
         const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
         axios.post(url, req.body, {
           headers: {
