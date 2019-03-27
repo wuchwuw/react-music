@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'yarn'
+                sh 'npm install'
             }
         }
-        state('Build') {
+        stage('Build') {
             stpes {
-              sh 'yarn build:prod'
+              sh 'npm run build:prod'
             }
         }
     }
