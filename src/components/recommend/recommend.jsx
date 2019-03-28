@@ -10,6 +10,8 @@ import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setDisc } from 'store/actions'
 
+let discListCaches = []
+
 class Recommend extends PureComponent {
   constructor (props) {
     super(props)
@@ -36,9 +38,16 @@ class Recommend extends PureComponent {
   }
 
   _getDiscList () {
+    if (discListCaches.length) {
+      this.setState({
+        discList: discListCaches
+      })
+      return
+    }
     getDiscList()
       .then((res) => {
         if (res.code === ERR_OK) {
+          discListCaches = res.data.list.slice()
           this.setState({
             discList: res.data.list
           })

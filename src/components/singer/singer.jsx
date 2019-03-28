@@ -12,6 +12,8 @@ import './singer.styl'
 const HOT_NAME = '热门'
 const HOT_SINGER_LEN = 20
 
+let singerCahces = []
+
 export default class Singer extends Component {
   constructor () {
     super()
@@ -23,12 +25,20 @@ export default class Singer extends Component {
     this._getSinger()
   }
   _getSinger () {
+    if (singerCahces.length) {
+      this.setState({
+        singer: singerCahces
+      })
+      return
+    }
     getSingerList()
       .then((res) => {
         if (ERR_OK === res.code) {
+          let singers = this._normalizeSinger(res.data.list)
           this.setState({
-            singer: this._normalizeSinger(res.data.list)
+            singer: singers
           })
+          singerCahces = singers.slice()
         }
       })
   }
