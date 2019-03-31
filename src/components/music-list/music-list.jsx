@@ -4,6 +4,7 @@ import SongList from 'base/song-list/song-list'
 import Scroll from 'base/scroll/scroll'
 import { connect } from 'react-redux'
 import { prefixStyle } from 'common/js/dom'
+import ListViewLoading from './loading'
 
 const RESERVED_HEIGHT = 40
 const transform = prefixStyle('transform')
@@ -87,16 +88,21 @@ class MuiscList extends Component {
         </div>
         <div className="bg-layer" ref={layer => { this.layer = layer }}></div>
         <div className="list" ref={list => this.list = list}>
-          <Scroll
-            ref={(scroll) => {this.scrollRef = scroll}}
-            data={this.props.songs}
-            scroll={this.scroll}
-            listenScroll={this.listenScroll}
-            probeType={this.probeType}>
-            <div className="song-list-wrapper">
-              <SongList songs={this.props.songs}></SongList>
-            </div>
-          </Scroll>
+          {
+            !this.props.songs.length ?
+              <ListViewLoading></ListViewLoading>
+            :
+            <Scroll
+              ref={(scroll) => {this.scrollRef = scroll}}
+              data={this.props.songs}
+              scroll={this.scroll}
+              listenScroll={this.listenScroll}
+              probeType={this.probeType}>
+              <div className="song-list-wrapper">
+                <SongList songs={this.props.songs}></SongList>
+              </div>
+            </Scroll>
+          }
         </div>
       </div>
     )

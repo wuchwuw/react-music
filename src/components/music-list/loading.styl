@@ -1,0 +1,27 @@
+.loading-wrap
+  height 100%
+  width: 100%
+  background: #fff
+  border-radius: 8px 8px 0 0
+  .loading-ul
+    padding: 15px 20px
+    .loading-list
+      height 64px
+      display flex
+      flex-direction column
+      justify-content center
+      > div
+        height 18px
+        width 100px
+        animation bg 2s infinite
+        &:last-child
+          width 170px
+          margin-top 8px
+
+@keyframes bg
+  0%
+    background rgba(0, 0, 0, 0.05)
+  50%
+    background rgba(0, 0, 0, 0.1)
+  100%
+    background rgba(0, 0, 0, 0.05)
