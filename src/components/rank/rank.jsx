@@ -9,6 +9,8 @@ import { findRoute } from 'common/js/util'
 import { connect } from 'react-redux'
 import { setTopList } from 'store/actions'
 
+let rankCaches = []
+
 class Rank extends Component {
   constructor () {
     super()
@@ -33,11 +35,18 @@ class Rank extends Component {
   }
 
   _getTopList() {
+    if (rankCaches.length) {
+      this.setState({
+        topList: rankCaches
+      })
+      return
+    }
     getTopList().then((res) => {
       if (res.code === ERR_OK) {
         this.setState({
           topList: res.data.topList
         })
+        rankCaches = res.data.topList.slice()
       }
     })
   }

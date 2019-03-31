@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { addClass } from 'common/js/dom.js'
 import BScroll from 'better-scroll'
-import { Map } from 'immutable'
 import { getBanner } from 'api/recommend'
 import { ERR_OK } from 'api/config'
 import './slider.styl'
+
+let bannerCaches = []
 
 export default class Slider extends Component {
   constructor (props) {
@@ -12,7 +13,7 @@ export default class Slider extends Component {
     this.state = {
       dots: [],
       currentIndex: 0,
-      recommends: []
+      banners: []
     }
   }
   static defaultProps = {
@@ -24,16 +25,27 @@ export default class Slider extends Component {
     this._getBanner()
   }
   _getBanner () {
+    if (bannerCaches.length) {
+      this.setBanners(bannerCaches)
+      return
+    }
     getBanner()
       .then((res) => {
         if (res.code === ERR_OK) {
-          this.setState({
-            recommends: res.data.slider
-          })
-          this._init()
+          bannerCaches = res.data.slider.slice()
+          this.setBanners(res.data.slider)
         }
       })
   }
+
+  setBanners (banners) {
+    this.setState({
+      banners
+    },() => {
+      this._init()
+    })
+  }
+
   _init () {
     const { autoPlay } = this.props
     this._setSliderWidth()
@@ -133,7 +145,7 @@ export default class Slider extends Component {
       <div className="slider" ref={(slider) => { this.slider = slider}}>
         <div className="slider-group" ref={(sliderChildren) => { this.sliderChildren = sliderChildren}}>
         {
-          this.state.recommends.map((item, index) => {
+          this.state.banners.map((item, index) => {
             return (
               <div key={item.id}>
                 <a href={item.linkUrl}>
