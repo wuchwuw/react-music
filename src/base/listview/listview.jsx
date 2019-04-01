@@ -54,9 +54,9 @@ class ListView extends Component {
   onShortcutTouchStart (e) {
     e.preventDefault()
     e.stopPropagation()
-    this.scrollRef.scroll.stop()
-    if (this.scrollRef.scroll.isInTransition) {
-      this.scrollRef.scroll.disable()
+    this.scrollRef.current.scroll.stop()
+    if (this.scrollRef.current.scroll.isInTransition) {
+      this.scrollRef.current.scroll.disable()
     }
     let anchorIndex = getData(e.target, 'index')
     let firstTouch = e.touches[0]
@@ -79,13 +79,13 @@ class ListView extends Component {
     if (index < 0) {
       index = 0
     }
-    this.scrollRef.scroll.scrollToElement(this.listGroupRef.children[index])
+    this.scrollRef.scroll.scrollToElement(this.listGroupRef.current.children[index])
     this.scrollY = this.scrollRef.scroll.y
     this.current(this.scrollY)
   }
   _calculateHeight () {
     this.listHeight = []
-    const list = this.listGroupRef.children
+    const list = this.listGroupRef.current.children
     let height = 0
     this.listHeight.push(height)
     for (let i = 0; i < list.length; i++) {
