@@ -22,12 +22,12 @@ export default class SearchBox extends Component {
     console.log(this.isSearch)
     !this.isSearch && this.props.history.push('/search')
   }
-  
+
   render () {
     return (
       <BoxWrap>
         <Box onClick={this.goSearch}>
-          <IconSearch className="icon-search"></IconSearch>
+          <IconSearch className="iconfont icon-search"></IconSearch>
           <SearchInput
             ref={this.inputRef}
             placeholder='搜索歌曲、歌手'
@@ -68,7 +68,7 @@ const SearchInput = styled.input`
   outline: 0;
   background: #ededed;
   font-size: 14px;
-  margin-right: 10px;
+  margin-left: 5px;
   &:placeholder {
     color: #999999;
   }

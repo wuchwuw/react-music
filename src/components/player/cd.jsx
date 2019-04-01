@@ -112,7 +112,7 @@ export default class Cd extends Component {
         </div>
         <div className="top" ref={top => this.top = top}>
           <div className="back" onClick={e => back()}>
-            <i className="icon-back"></i>
+            <i className="iconfont icon-back"></i>
           </div>
           <h1 className="title">{currentSong.name}</h1>
           <h2 className="subtitle">{currentSong.singer}</h2>
@@ -162,13 +162,13 @@ export default class Cd extends Component {
               <i className="iconMode"></i>
             </div>
             <div className="icon i-left">
-              <i onClick={this.props.prev} className="icon-prev"></i>
+              <i onClick={this.props.prev} className="iconfont icon-prev"></i>
             </div>
             <div className="icon i-center">
-              <i onClick={this.props.togglePlaying} className={playing ? 'icon-pause' : 'icon-play'}></i>
+              <i onClick={this.props.togglePlaying} className={playing ? 'iconfont icon-pause' : 'iconfont icon-play'}></i>
             </div>
             <div className="icon i-right" >
-              <i onClick={this.props.next} className="icon-next"></i>
+              <i onClick={this.props.next} className="iconfont icon-next"></i>
             </div>
             <div className="icon i-right">
               <i  className="icon"></i>

@@ -19,7 +19,7 @@ class MiniPlayer extends Component {
   }
   render () {
     const { currentSong, radius, percent, playing } = this.props
-    const miniIcon = playing ? 'icon-pause-mini' : 'icon-play-mini'
+    const miniIcon = playing ? 'icon-mini-pause' : 'icon-mini-play'
     const cdCls = playing ? 'play' : 'pause'
     return (
       <div className="mini-player" onClick={this.setFullScreen}>
@@ -34,7 +34,7 @@ class MiniPlayer extends Component {
         </div>
         <div className="control">
           <ProgressCircle radius={radius} percent={percent}>
-            <i onClick={ e => this.togglePlaying(e)} className={`icon-mini ${miniIcon}`}></i>
+            <i onClick={ e => this.togglePlaying(e)} className={`iconfont mini ${miniIcon}`}></i>
           </ProgressCircle>
         </div>
         {/* <div className="control">

@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
-import eot from 'common/fonts/music-icon.eot'
-import ttf from 'common/fonts/music-icon.ttf'
-import woff from 'common/fonts/music-icon.woff'
-import svg from 'common/fonts/music-icon.svg?#music-icon'
+import eot from 'common/fonts/iconfont.eot?t=1554131065158'
+import ttf from 'common/fonts/iconfont.ttf?t=1554131065158'
+import woff from 'common/fonts/iconfont.woff?t=1554131065158'
+import svg from 'common/fonts/iconfont.svg?t=1554131065158#iconfont'
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -62,92 +62,53 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
-  @font-face {
-    font-family: 'music-icon';
-    src: url(${eot});
-    src: url(${eot}?#iefix) format('embedded-opentype'),
-      url(${ttf}) format('truetype'),
-      url(${woff}) format('woff'),
-      url(${svg}) format('svg');
-    font-weight: normal;
-    font-style: normal;
+  @font-face {font-family: "iconfont";
+    src: url(${eot}); /* IE9 */
+    src: url(${eot}#iefix) format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAATEAAsAAAAACsQAAAR4AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDegqHXIY+ATYCJAMkCxQABCAFhG0HbRtHCSMRJmSRR/bPA9ttSqAY3RnWcuYgTvZw3+Hbv828Re57BtZVlU4WhHvBE/Dyy5oTe058aSAe7t298ceYlBUWB5yFGoaUcTz0O//VYRpahkGAccY9H8hEJzNxrge2L0yEGcrZJ4++664DTjP6+zGXZ9cXmr7pb+vFxYC0hOWFhEcRzzRKhFC4TmtYmFdme0Kgmq/j80AAeSccQUZ0YiZkOa4gqJh1NWWQTRl5DZGINWHJtfkiiyElLh/uKoBF7ufJD3ciC5ygwl+UWh1ViVAB4lnKS3gKKQ9+PDuAw02AAo4AGMgpdU6AhklHUOntY8wbgLKYCj8IQUKKUC+0iWclEtK4QHxrL7cTpcDVSnU6NxQJuJhREPbPI6UiCK0pWQhQCAiEQATSEIIQyEBIQSAFoR4Bg9AqHEPVBgQU4tkmcAAgZ65RB6ABkA6QC652dPegnBLCGG25yVz3UVHdxMjLVvxtterA3TeZ995micQ594Xe+/dLZYtEOffuZd29W19WWuxX4OQLVLyv+oyIPIh372buPU+UUrVi3r7R5lZf2Ld7zr5676hDzb55p3nbyqo9/MAcWWtdvVNec277as3lcF5rxZodCgrzbGp2GeisGu3ZvlsX2bJS3rGu2WM1T4fkbM28fQZk7d78tfh75jQzq5RzzQXN5s9aobDrUlchP7eSSI2umnRDK0yD7eVK6f1M6aCIGRuz+0xk5KI9P+aDh/2UOpYdYmIxO8gOGfkhktC5Tl0DTweewZTyD5mpKXso9KamWko1StvWHaYfPlDIDu/5kAa21gKe6yUjdA8EfbOH5c58LN3/9u0Btp/tDXR/wKN7xfHOccATy72WiTcm6dGj3CQ3RXzIuYAH2STOh6tqWqRP5qadUb5Rm3Zl+qy1uuYu8dFIPySmrSHka39N3l7DVWXjeyXpaJSRKv8bVVhnV3DhEjQZo8XEdS+NWtaAY6o+9wXd66p6DElZFJS2WM7x0i3xR5tVPdZZaTu0ZDfhofIXhfAyMzKlSuyWyksfjEIeACST9ocOgjxjn2nTy9aYNu0BAPZy1wCA0ucf/Ttci1zuUqIS+FtWwQHAg4txfWiS8H6N8sDfUkVr0f83IP0EGE16l3CTXF77laBlX7oFBJDzOAnHlcuLGfDP9arjGam1WscBIk6JDsCJHEDFLhhGuIGUzB2kxZ4g74qYmxV0aAclmQDsMclA1DgEqvQDU+MaxglPITDiM4RqQmGcvOy43lOBdeSXG0MJEooXynXbGGmRi698Ix0qxUmJI/3BNo9Q4OyazbzQgMe4wI5pKGLIcFvTk70MVdVSx20BLW4m0kWeS3XZJ7m6rVcXERgoAhIktiA5rdUwZn1xyX3/G6QGFYVrBt64/4BZ+cZJwOW3wLyUTauBa6m3RqmQUNwg5lDeqpEn2aESyRbpyo8qgCZcWY94J+LRUqat0p1fXb/Wc0CKvzsJFROXQEKJJJZEUtiq1LLv1GBxkJcp1tkuVro813mTO+XH7RrMsusY4yUvaGZYrQA=') format('woff2'),
+    url(${woff}) format('woff'),
+    url(${ttf}) format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url(${svg}) format('svg'); /* iOS 4.1- */
   }
-  [class^="icon-"], [class*=" icon-"] {
-    font-family: 'music-icon' !important;
-    speak: none;
+
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
     font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  .icon-ok:before { 
-    content: "\\e900";
-  }
-  .icon-close:before {
-    content: "\\e901";
-  }
-  .icon-add:before {
-    content: "\\e902";
-  }
-  .icon-play-mini:before {
-    content: "\\e903";
-  }
-  .icon-playlist:before {
-    content: "\\e904";
-  }
-  .icon-music:before {
-    content: "\\e905";
-  }
-  .icon-search:before {
-    content: "\\e906";
-  }
-  .icon-clear:before {
-    content: "\\e907";
-  }
-  .icon-delete:before {
-    content: "\\e908";
-  }
-  .icon-favorite:before {
-    content: "\\e909";
-  }
-  .icon-not-favorite:before {
-    content: "\\e90a";
-  }
-  .icon-pause:before {
-    content: "\\e90b";
-  }
+
   .icon-play:before {
-    content: "\\e90c";
+    content: "\\e600";
   }
-  .icon-prev:before {
-    content: "\\e90d";
+
+  .icon-pause:before {
+    content: "\\e789";
   }
-  .icon-loop:before {
-    content: "\\e90e";
+
+  .icon-search:before {
+    content: "\\e671";
   }
-  .icon-sequence:before {
-    content: "\\e90f";
-  }
-  .icon-random:before {
-    content: "\\e910";
-  }
+
   .icon-back:before {
-    content: "\\e911";
+    content: "\\e66a";
   }
-  .icon-mine:before {
-    content: "\\e912";
+
+  .icon-mini-play:before {
+    content: "\\e64f";
   }
+
   .icon-next:before {
-    content: "\\e913";
+    content: "\\e63c";
   }
-  .icon-dismiss:before {
-    content: "\\e914";
+
+  .icon-prev:before {
+    content: "\\e63d";
   }
-  .icon-pause-mini:before {
-    content: "\\e915";
+
+  .icon-mini-pause:before {
+    content: "\\e670";
   }
 
   .slider-enter {

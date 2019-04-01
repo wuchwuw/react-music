@@ -75,7 +75,7 @@ class MuiscList extends Component {
     return (
       <MusicListWrap>
         <div className="back" onClick={this.back}>
-          <i className="icon-back"></i>
+          <i className="iconfont icon-back"></i>
         </div>
         <h1 className="title">{title}</h1>
         <div className={rank ? 'bg-image bg-rank' : 'bg-image'} style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
@@ -147,7 +147,7 @@ const MusicListWrap = styled.div`
     text-align: center;
     line-height: 40px;
     font-size: 18px;
-    color: $color-text;
+    color: #fff;
   }
   .bg-image {
     position: relative;
