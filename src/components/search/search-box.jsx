@@ -7,7 +7,6 @@ export default class SearchBox extends Component {
     this.inputRef = React.createRef()
     this.setQuery = this.setQuery.bind(this)
     this.goSearch = this.goSearch.bind(this)
-    this.isSearch = this.props.history.location.pathname === '/search'
   }
 
   componentDidMount () {
@@ -24,6 +23,7 @@ export default class SearchBox extends Component {
   }
 
   render () {
+    this.isSearch = this.props.history.location.pathname === '/search'
     return (
       <BoxWrap>
         <Box onClick={this.goSearch}>
@@ -68,7 +68,7 @@ const SearchInput = styled.input`
   outline: 0;
   background: #ededed;
   font-size: 14px;
-  margin-left: 5px;
+  margin: 0 7px;
   &:placeholder {
     color: #999999;
   }

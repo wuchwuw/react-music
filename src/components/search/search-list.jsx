@@ -20,7 +20,7 @@ class SearchList extends Component {
     this.state = {
       hotKey: [],
       result: [],
-      hasMore: false
+      hasMore: true
     }
     this.page = 1
     this.pullup = true
@@ -85,9 +85,9 @@ class SearchList extends Component {
   getIconCls(item) {
     let s
     if (item.type === TYPE_SINGER) {
-      s = 'icon-mine'
+      s = 'iconfont icon-mine'
     } else {
-      s = 'icon-music'
+      s = 'iconfont icon-music'
     }
     return (
       <i className={s}></i>
@@ -118,6 +118,8 @@ class SearchList extends Component {
         this._genResult(res.data).then((result) => {
           this.setState({
             result
+          }, () => {
+            this.scroll.refresh()
           })
         })
         this._checkMore(res.data)
@@ -137,6 +139,8 @@ class SearchList extends Component {
           let more = this.state.result.concat(result)
           this.setState({
             result: more
+          }, () => {
+            this.scroll.refresh()
           })
         })
         this._checkMore(res.data)
@@ -182,13 +186,15 @@ class SearchList extends Component {
           :
           <SuggestWrap>
             <Scroll
+              ref={(scroll) => this.scroll = scroll}
               data={result}
               pullup={this.pullup}
               beforeScroll={this.beforeScroll}
               scrollToEnd={this.searchMore}
               beforeScroll={this.listScroll}
             >
-              <ul className="suggest-list">
+            <div className="suggest-list">
+              <ul>
                 {
                   result.map((item, index) => (
                     <li key={index} className="suggest-item" onClick={() => this.selectItem(item)}>
@@ -201,13 +207,16 @@ class SearchList extends Component {
                     </li>
                   ))
                 }
-                <div className="loading-wrap" style={hasMore ? {display:'flex'} : {display:'none'}}>
+              </ul>
+              {
+                hasMore && <div className="loading-wrap">
                   <Loading title=""></Loading>
                 </div>
-              </ul>
+              }
               {/* <div v-show="!hasMore && !result.length" className="no-result-wrapper">
                 <no-result title="抱歉，暂无搜索结果"></no-result>
               </div> */}
+            </div>
             </Scroll>
           </SuggestWrap>
         }
@@ -221,8 +230,11 @@ export default connect()(SearchList)
 const SearchListWrap = styled.div`
   text-align: left;
   padding-top: 20px;
-  height: 100%;
-  overflow: hidden;
+  position: fixed;
+  top: 44px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   box-sizing: border-box;
 `
 
