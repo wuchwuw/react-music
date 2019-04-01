@@ -20,6 +20,9 @@ class ListView extends Component {
     this.onShortcutTouchStart = this.onShortcutTouchStart.bind(this)
     this.onShortcutTouchMove = this.onShortcutTouchMove.bind(this)
     this.scroll = this.scroll.bind(this)
+    this.scrollRef = React.createRef()
+    this.listGroupRef = React.createRef()
+    this.fixedRef = React.createRef()
   }
   static propTypes = {
     data: PropTypes.array.isRequired
@@ -51,9 +54,9 @@ class ListView extends Component {
   onShortcutTouchStart (e) {
     e.preventDefault()
     e.stopPropagation()
-    this.listview.scroll.stop()
-    if (this.listview.scroll.isInTransition) {
-      this.listview.scroll.disable()
+    this.scrollRef.scroll.stop()
+    if (this.scrollRef.scroll.isInTransition) {
+      this.scrollRef.scroll.disable()
     }
     let anchorIndex = getData(e.target, 'index')
     let firstTouch = e.touches[0]
@@ -76,13 +79,13 @@ class ListView extends Component {
     if (index < 0) {
       index = 0
     }
-    this.listview.scroll.scrollToElement(this.listGroup.children[index])
-    this.scrollY = this.listview.scroll.y
+    this.scrollRef.scroll.scrollToElement(this.listGroupRef.children[index])
+    this.scrollY = this.scrollRef.scroll.y
     this.current(this.scrollY)
   }
   _calculateHeight () {
     this.listHeight = []
-    const list = this.listGroup.children
+    const list = this.listGroupRef.children
     let height = 0
     this.listHeight.push(height)
     for (let i = 0; i < list.length; i++) {
@@ -119,7 +122,7 @@ class ListView extends Component {
       return
     }
     this.fixedTop = fixedTop
-    this.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`
+    this.fixedRef.style.transform = `translate3d(0,${fixedTop}px,0)`
   }
   scroll (pos) {
     this.scrollY = pos.y
@@ -140,15 +143,15 @@ class ListView extends Component {
     })
     return (
       <div className="listview">
-        <Scroll listenScroll={this.listenScroll} probeType={3} data={data} scroll={this.scroll} ref={listview => { this.listview = listview }}>
-          <ul ref={listGroup => { this.listGroup = listGroup }}>
+        <Scroll listenScroll={this.listenScroll} probeType={3} data={data} scroll={this.scroll} ref={this.scrollRef}>
+          <ul ref={this.listGroupRef}>
             {
-              data.map((group, index) => (
+              data.map((group) => (
                 <li key={group.title} className="list-group">
                   <h2 className="list-group-title">{group.title}</h2>
                   <ul>
                     {
-                      group.item.map((item, index) => (
+                      group.item.map((item) => (
                         <li onClick={e => {this.selectItem(e, item)}} key={item.id} className="list-group-item">
                           <img className="avatar" src={item.avatar} alt=""/>
                           <span className="name">{item.name}</span>
@@ -178,7 +181,7 @@ class ListView extends Component {
               }
             </ul>
           </div>
-          <div className="list-fixed" ref={fixed => this.fixed = fixed} style={this.fixedTitle ? {display:'block'} : {display: 'none'}}>
+          <div className="list-fixed" ref={this.fixedRef} style={this.fixedTitle ? {display:'block'} : {display: 'none'}}>
             <div className="fixed-title">{this.fixedTitle}</div>
           </div>
         </Scroll>

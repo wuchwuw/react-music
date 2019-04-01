@@ -3,7 +3,8 @@ import { addClass } from 'common/js/dom.js'
 import BScroll from 'better-scroll'
 import { getBanner } from 'api/recommend'
 import { ERR_OK } from 'api/config'
-import './slider.styl'
+import styled from 'styled-components'
+// import './slider.styl'
 
 let bannerCaches = []
 
@@ -142,7 +143,7 @@ export default class Slider extends Component {
   }
   render () {
     return (
-      <div className="slider" ref={(slider) => { this.slider = slider}}>
+      <SliderWrap ref={(slider) => { this.slider = slider}}>
         <div className="slider-group" ref={(sliderChildren) => { this.sliderChildren = sliderChildren}}>
         {
           this.state.banners.map((item, index) => {
@@ -165,7 +166,56 @@ export default class Slider extends Component {
             })
           }
         </div>
-      </div>
+      </SliderWrap>
     )
   }
 }
+
+const SliderWrap = styled.div`
+  min-height: 1px;
+  overflow: hidden;
+  border-radius: 5px;
+  .slider-group {
+    position: relative;
+    white-space: nowrap;
+  }
+  .slider-item {
+    float: left;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+  }
+  a {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-decoration: none;
+  }
+  img {
+    display: block;
+    width: 100%;
+  }
+  .dots {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 12px;
+    transform: translateZ(1px);
+    text-align: center;
+    font-size: 0;
+  }
+  .dot {
+    display: inline-block;
+    margin: 0 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .dot.active {
+    width: 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+`

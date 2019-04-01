@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getSingerDetail } from 'api/singer'
 import { ERR_OK } from 'api/config'
 import { createSong, isValidMusic, processSongsUrl } from 'common/js/song'
+import styled from 'styled-components'
 
 class SingerDetail extends Component {
   constructor () {
@@ -44,9 +45,9 @@ class SingerDetail extends Component {
   render () {
     const { name: title, avatar: bgImage } = this.props.singer
     return (
-      <div className="singer-slider">
+      <Wrap>
         <MusicList songs={this.state.songs} history={this.props.history} title={title} bgImage={bgImage}></MusicList>
-      </div>
+      </Wrap>
       // <WidthSliderTransition {...this.props}>
       //   <MusicList songs={this.state.songs} history={this.props.history} title={title} bgImage={bgImage}></MusicList>
       // </WidthSliderTransition>
@@ -65,3 +66,13 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(SingerDetail)
+
+
+const Wrap = styled.div`
+  position: fixed
+  top: 0
+  width: 100%
+  height: 100%
+  overflow: hidden
+  z-index 100
+`

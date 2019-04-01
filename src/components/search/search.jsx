@@ -4,29 +4,22 @@ import { Route } from 'react-router-dom'
 import { findRoute } from 'common/js/util'
 import { connect } from 'react-redux'
 import SearchList from './search-list'
-import './search.styl'
+import SearchBox from './search-box'
+import styled from 'styled-components'
 
 class Search extends Component {
   constructor () {
     super()
     this.setQuery = this.setQuery.bind(this)
-    this.clear = this.clear.bind(this)
     this.state = {
       query: ''
     }
   }
-  componentDidMount () {
-    this.query.focus()
-  }
 
-  setQuery (query) {
+  setQuery (e) {
     this.setState({
-      query
+      query: e.target.value
     })
-  }
-
-  clear () {
-    this.props.history.go(-1)
   }
 
   render () {
@@ -35,30 +28,26 @@ class Search extends Component {
     const { setQuery } = this
     const route = findRoute(routes, 'searchSinger')
     return (
-      <div className="search">
-      <div className="m-header">
-        <div className="search-box">
-          <i className="icon-search"></i>
-          <input
-            ref={query => this.query = query}
-            onChange={(e) => {setQuery(e.target.value)}}
-            value={query}
-            className='box f'
-            placeholder='搜索歌曲、歌手'
-            onFocus={() => {this.setState({isFocus: true})}}
-          />
-        </div>
-        <div onClick={this.clear} className="cancel">取消</div>
-      </div>
+      <SearchWrap>
+        <SearchBox history={history} setQuery={setQuery}></SearchBox>
         <SearchList setQuery={setQuery} query={query} history={history}></SearchList>
         <TransitionGroup>
           <CSSTransition key={location.pathname} timeout={300} classNames="slider">
             <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
          </CSSTransition>
         </TransitionGroup>
-      </div>
+      </SearchWrap>
     )
   }
 }
 
 export default connect()(Search)
+
+const SearchWrap = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width 100%;
+  background: #fff;
+  z-index: 1;
+`

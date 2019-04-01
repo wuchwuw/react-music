@@ -8,6 +8,7 @@ const DIRECTION_V = 'vertical'
 export default class Scroll extends Component {
   constructor (props) {
     super(props)
+    this.wrapperRef = React.createRef()
   }
   static defaultProps = {
     probeType: 1,
@@ -46,10 +47,10 @@ export default class Scroll extends Component {
     this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
   }
   _initScroll () {
-    if (!this.wrapper) {
+    if (!this.wrapperRef.current) {
       return
     }
-    this.scroll = new BScroll(this.wrapper, {
+    this.scroll = new BScroll(this.wrapperRef.current, {
       probeType: this.props.probeType,
       click: this.props.click,
       eventPassthrough: this.props.direction === DIRECTION_V ? DIRECTION_H : DIRECTION_V
@@ -74,7 +75,7 @@ export default class Scroll extends Component {
   }
   render () {
     return (
-      <div ref={wrapper => this.wrapper = wrapper} style={{height: '100%'}}>
+      <div ref={this.wrapperRef} style={{height: '100%'}}>
         {this.props.children}
       </div>
     )

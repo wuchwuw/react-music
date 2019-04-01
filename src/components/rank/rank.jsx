@@ -4,10 +4,10 @@ import Scroll from 'base/scroll/scroll'
 import { getTopList } from 'api/rank'
 import { ERR_OK } from 'api/config'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import './rank.styl'
 import { findRoute } from 'common/js/util'
 import { connect } from 'react-redux'
 import { setTopList } from 'store/actions'
+import styled from 'styled-components'
 
 let rankCaches = []
 
@@ -59,7 +59,7 @@ class Rank extends Component {
     const { match, history, routes, location } = this.props
     const route = findRoute(routes, 'rankDetail')
     return (
-      <div className="rank" ref={(rank) => {this.rank = rank}}>
+      <RankWrap ref={(rank) => {this.rank = rank}}>
         <div className="toplist">
           <Scroll data={topList} ref={(scroll) => {this.scroll = scroll}}>
             <ul>
@@ -90,7 +90,7 @@ class Rank extends Component {
             <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
          </CSSTransition>
         </TransitionGroup>
-      </div>
+      </RankWrap>
     )
   }
 }
@@ -110,3 +110,53 @@ function mapDispatchToProps (dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rank)
+
+const RankWrap = styled.div`
+  position: fixed;
+  width: 100%;
+  top: 84px;
+  bottom: 0;
+  .toplist {
+    height: 100%;
+    overflow: hidden;
+  }
+  .item {
+    display: flex;
+    margin: 0 20px;
+    padding-top: 20px;
+    height: 100px;
+  }
+  .item:last-child {
+    padding-bottom: 20px;
+  }
+  .icon {
+    flex: 0 0 100px;
+    width: 100px;
+    height: 100px;
+  }
+  .icon > img {
+    border-radius: 5px;
+  }
+  .songlist {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    height: 100px;
+    overflow: hidden;
+    background: #fff;
+    color: #333333;
+    font-size: 14px;
+  }
+  .song {
+    no-wrap();
+    line-height 28px;
+  }
+  .loading-container {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`

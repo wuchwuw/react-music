@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import './header.styl'
+// import './header.styl'
 import { withRouter } from 'react-router'
-import PlayerIcon from './player-icon'
+import SearchBox from 'components/search/search-box'
 
 class Mheader extends Component {
   constructor () {
@@ -14,20 +14,9 @@ class Mheader extends Component {
   }
 
   render () {
+    let { history } = this.props
     return (
-      <div className="m-header">
-        <div className="search-box">
-          <i className="icon-search"></i>
-          <input
-            className='box f'
-            placeholder='搜索歌曲、歌手'
-            onClick={e => this.toggleFocus(e)}
-          />
-        </div>
-        {/* <div className="icon-wrap">
-          <PlayerIcon></PlayerIcon>
-        </div> */}
-      </div>
+      <SearchBox history={history}></SearchBox>
     )
   }
 }

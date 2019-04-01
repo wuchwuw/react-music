@@ -4,11 +4,11 @@ import { ERR_OK } from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import { findRoute } from 'common/js/util'
-import './recommend.styl'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setDisc } from 'store/actions'
+import styled from 'styled-components'
 
 let discListCaches = []
 
@@ -20,6 +20,8 @@ class Recommend extends PureComponent {
     }
     this.selectItem = this.selectItem.bind(this)
     this.handlePlaylist = this.handlePlaylist.bind(this)
+    this.recommendRef = React.createRef()
+    this.scrollRef = React.createRef()
   }
 
   componentDidMount () {
@@ -32,8 +34,8 @@ class Recommend extends PureComponent {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (snapshot) {
-      this.recommend.style.bottom = '60px'
-      this.scroll.refresh()
+      this.recommendRef.current.style.bottom = '60px'
+      this.scrollRef.current.refresh()
     }
   }
 
@@ -57,8 +59,8 @@ class Recommend extends PureComponent {
 
   handlePlaylist () {
     if (this.props.playlist.length > 0) {
-      this.recommend.style.bottom = '60px'
-      this.scroll.refresh()
+      this.recommendRef.current.style.bottom = '60px'
+      this.scrollRef.current.refresh()
     }
   }
 
@@ -72,9 +74,9 @@ class Recommend extends PureComponent {
     const route = findRoute(routes, 'disc')
 
     return (
-      <div className="recommend" ref={(recommend) => { this.recommend = recommend }}>
+      <RecommendWrap ref={this.recommendRef}>
         <div className="recommend-content">
-          <Scroll data={this.state.discList} ref={(scroll) => { this.scroll = scroll }}>
+          <Scroll data={this.state.discList} ref={this.scrollRef}>
             <div>
               <div className="slider-wrapper">
                 <Slider></Slider>
@@ -83,7 +85,7 @@ class Recommend extends PureComponent {
                 <h1 className="list-title">推荐歌单</h1>
                 <ul>
                   {
-                    this.state.discList.map((item, index) => (
+                    this.state.discList.map((item) => (
                       <li onClick={() => { this.selectItem(item)}} key={item.dissid} className="item">
                         <div className="icon">
                           <img width="60" height="60" src={item.imgurl} alt=""/>
@@ -105,7 +107,7 @@ class Recommend extends PureComponent {
             <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
          </CSSTransition>
         </TransitionGroup>
-      </div>
+      </RecommendWrap>
     )
   }
 }
@@ -125,3 +127,51 @@ function mapDispatchToProps (dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recommend)
+
+const RecommendWrap = styled.div`
+  position: fixed;
+  width: 100%;
+  top: 84px;
+  bottom: 0;
+  background: #fff;
+  .recommend-content {
+    height: 100%;
+    overflow: hidden;
+  }
+  .slider-wrapper {
+    position: relative;
+    padding: 0 20px;
+    overflow: hidden;
+  }
+  .list-title {
+    height: 55px;
+    padding-left: 18px;
+    line-height: 55px;
+    font-size: 16px;
+    font-size: 800;
+  }
+  .item {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 0 20px 20px 20px;
+  }
+  .icon {
+    flex: 0 0 60px;
+    width: 60px;
+    padding-right: 20px;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    line-height: 20px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .name {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+`

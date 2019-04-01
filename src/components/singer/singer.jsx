@@ -6,8 +6,8 @@ import ListView from 'base/listview/listview'
 import createSinger from 'common/js/singer'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { findRoute } from 'common/js/util'
-
-import './singer.styl'
+import styled from 'styled-components'
+// import './singer.styl'
 
 const HOT_NAME = '热门'
 const HOT_SINGER_LEN = 20
@@ -87,14 +87,21 @@ export default class Singer extends Component {
     const { history, routes, location } = this.props
     const route = findRoute(routes, 'singerDetail')
     return (
-      <div className="singer">
+      <SingerWrap>
         <ListView history={history} data={this.state.singer}></ListView>
         <TransitionGroup>
           <CSSTransition key={this.props.location.pathname} timeout={300} classNames="slider">
             <Route history={history} location={location} key={location.key} path={route.path} component={route.component}></Route>
          </CSSTransition>
         </TransitionGroup>
-      </div>
+      </SingerWrap>
     )
   }
 }
+
+const SingerWrap = styled.div`
+  position: fixed
+  top: 88px
+  bottom: 0
+  width: 100%
+`

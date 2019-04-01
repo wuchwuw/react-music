@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './search-list.styl'
 import { getHotKey, search } from 'api/search'
 import { is } from 'immutable'
 import { ERR_OK } from 'api/config'
@@ -10,6 +9,7 @@ import Scroll from 'base/scroll/scroll'
 import { setSinger, insertSong } from 'store/actions'
 import { connect } from 'react-redux'
 import Loading from '../../base/loading/loading.jsx'
+import styled from 'styled-components'
 
 const TYPE_SINGER = 'singer'
 const perpage = 20
@@ -107,7 +107,6 @@ class SearchList extends Component {
   }
 
   search() {
-    console.log('search')
     let { query } =  this.props
     this.page = 1
     this.setState({
@@ -165,10 +164,10 @@ class SearchList extends Component {
     let { hotKey, result, hasMore } = this.state
     let { query, setQuery } = this.props
     return (
-      <div className="wrap">
+      <SearchListWrap>
         {
           !query ?
-          <div className="hot-key">
+          <HotKey>
             <h1 className="title">热门搜索</h1>
             <ul>
               {
@@ -179,9 +178,9 @@ class SearchList extends Component {
                 ))
               }
             </ul>
-          </div>
+          </HotKey>
           :
-          <div className="suggest">
+          <SuggestWrap>
             <Scroll
               data={result}
               pullup={this.pullup}
@@ -210,18 +209,72 @@ class SearchList extends Component {
                 <no-result title="抱歉，暂无搜索结果"></no-result>
               </div> */}
             </Scroll>
-          </div>
+          </SuggestWrap>
         }
-      </div>
+      </SearchListWrap>
     )
   }
 }
 
-// const mapStateToProps = (state) => {
-//   const { query } = state
-//   return {
-//     query
-//   }
-// }
-
 export default connect()(SearchList)
+
+const SearchListWrap = styled.div`
+  text-align: left;
+  padding-top: 20px;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+`
+
+const HotKey = styled.div`
+  margin: 0 20px 20px 20px;
+  .title {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .item {
+    display: inline-block;
+    padding: 8px ;
+    margin: 0 15px 10px 0;
+    border-radius: 40px;
+    background: #ededed;
+    font-size: 14px;
+  }
+`
+const SuggestWrap = styled.div`
+  height: 100%;
+  overflow: hidden;
+  .suggest-list {
+    padding: 0 30px;
+  }
+  .suggest-item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+  .search-icon {
+    flex: 0 0 30px;
+    width: 30px;
+  }
+  .name {
+    flex: 1;
+    font-size: 14px;
+    overflow: hidden;
+  }
+  .search-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .no-result-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .loading-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`

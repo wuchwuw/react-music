@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import './music-list.styl'
 import SongList from 'base/song-list/song-list'
 import Scroll from 'base/scroll/scroll'
 import { connect } from 'react-redux'
 import { prefixStyle } from 'common/js/dom'
 import ListViewLoading from './loading'
+import styled from 'styled-components'
 
 const RESERVED_HEIGHT = 40
 const transform = prefixStyle('transform')
 const transitionDuration = prefixStyle('transitionDuration')
 const backdrop = prefixStyle('backdrop-filter')
+
 
 class MuiscList extends Component {
   constructor () {
@@ -72,7 +73,7 @@ class MuiscList extends Component {
     const { title, bgImage, rank } = this.props
     const bgStyle = { backgroundImage: `url(${bgImage}`}
     return (
-      <div className="music-list">
+      <MusicListWrap>
         <div className="back" onClick={this.back}>
           <i className="icon-back"></i>
         </div>
@@ -104,7 +105,7 @@ class MuiscList extends Component {
             </Scroll>
           }
         </div>
-      </div>
+      </MusicListWrap>
     )
   }
 }
@@ -116,3 +117,106 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, null)(MuiscList)
+
+const MusicListWrap = styled.div`
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  .back {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    z-index: 50;
+  }
+  .icon-back {
+    display: block;
+    padding: 10px;
+    font-size: 22px;
+    color: #fff;
+  }
+  .title {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    z-index: 40;
+    width: 80%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    color: $color-text;
+  }
+  .bg-image {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 70%;
+    transform-origin: top;
+    background-size: cover;
+  }
+  .bg-image.bg-rank {
+    background-position: center;
+  }
+  .play-wrap {
+    position: absolute;
+    bottom: 20px;
+    z-index: 50;
+    width: 100%;
+  }
+  .play {
+    box-sizing: border-box;
+    width: 135px;
+    padding: 7px 0;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #d93f30;
+    color: $color-theme;
+    border-radius: 100px;
+    font-size: 0;
+  }
+  .icon-play {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    font-size: 16px;
+  }
+  .text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+  }
+  .filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bg-layer {
+    position: relative;
+    height: 100%;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+  }
+  .list {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  .song-list-wrapper {
+    padding: 15px 20px;
+    border-radius: 10px 10px 0 0;
+    background: #fff;
+  }
+  .loading-container {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+`
