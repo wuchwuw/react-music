@@ -9,6 +9,7 @@ import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setDisc } from 'store/actions'
 import styled from 'styled-components'
+import ImageDefault from 'base/image-default/image-default'
 
 let discListCaches = []
 
@@ -88,7 +89,12 @@ class Recommend extends PureComponent {
                     this.state.discList.map((item) => (
                       <li onClick={() => { this.selectItem(item)}} key={item.dissid} className="item">
                         <div className="icon">
-                          <img width="60" height="60" src={item.imgurl} alt=""/>
+                        <ImageDefault
+                          src={item.imgurl}
+                          height={60}
+                          width={60}
+                          placeholder={<div style={{height: '60px',width: '60px',background: '#ededed'}}></div>}
+                        ></ImageDefault>
                         </div>
                         <div className="text">
                           <h2 className="name">{item.creator.name}</h2>
@@ -160,6 +166,7 @@ const RecommendWrap = styled.div`
     flex: 0 0 60px;
     width: 60px;
     padding-right: 20px;
+    font-size: 0;
   }
   .text {
     display: flex;

@@ -46,7 +46,7 @@ class TopList extends Component {
     const { songs } = this.state
     const title = ''
     const bgImage = topList.picUrl
-    return <MusicList history={history} rank={true} title={title} bgImage={bgImage} songs={songs}></MusicList>
+    return <MusicList history={history} title={title} bgImage={bgImage} songs={songs}></MusicList>
   }
 }
 

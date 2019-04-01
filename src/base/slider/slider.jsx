@@ -23,6 +23,7 @@ export default class Slider extends Component {
     interval: 4000
   }
   componentDidMount () {
+    this.slider.style.height = (document.documentElement.clientWidth - 40) / 2.5 + 'px'
     this._getBanner()
   }
   _getBanner () {

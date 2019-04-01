@@ -72,6 +72,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-lazyload": "^2.5.0",
     "react-redux": "^5.0.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",

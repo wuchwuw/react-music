@@ -60,6 +60,7 @@ class MuiscList extends Component {
       zIndex = 10
       this.bgImage.style.paddingTop = 0
       this.bgImage.style.height = `${RESERVED_HEIGHT}px`
+      this.bgImage.style.backgroundPosition = 'top'
       // this.playBtn.style.display = 'none'
     } else {
       this.bgImage.style.paddingTop = '70%'
@@ -70,7 +71,7 @@ class MuiscList extends Component {
     this.bgImage.style.zIndex = zIndex
   }
   render () {
-    const { title, bgImage, rank } = this.props
+    const { title, bgImage } = this.props
     const bgStyle = { backgroundImage: `url(${bgImage}`}
     return (
       <MusicListWrap>
@@ -78,7 +79,7 @@ class MuiscList extends Component {
           <i className="iconfont icon-back"></i>
         </div>
         <h1 className="title">{title}</h1>
-        <div className={rank ? 'bg-image bg-rank' : 'bg-image'} style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
+        <div className='bg-image' style={bgStyle} ref={bgImage => this.bgImage = bgImage}>
           {/* <div className="play-wrap">
             <div className="play" ref={playBtn => this.playBtn = playBtn}>
               <i className="icon-play"></i>
